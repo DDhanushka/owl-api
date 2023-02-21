@@ -12,7 +12,7 @@ target/
 *.iml
 *.ipr
 .idea/encodings.xml
-src/OWLOutput/
+src/OWLOutput/*
 
 ### Eclipse ###
 .apt_generated

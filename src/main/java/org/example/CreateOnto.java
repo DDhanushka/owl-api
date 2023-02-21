@@ -12,23 +12,31 @@ public class CreateOnto {
     public static void main(String[] args) {
         // Create an OWL ontology manager
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+        IRI ontologyIRI = IRI.create("http://example.com/ontology");
 
         try {
             // Create an OWL ontology
-            OWLOntology ontology = manager.createOntology(IRI.create("http://example.com/ontology"));
+            OWLOntology ontology = manager.createOntology(ontologyIRI);
 
             OWLDataFactory factory = manager.getOWLDataFactory();
 
             // Create a subclass of an existing class
-            OWLClass parentClass = factory.getOWLClass(IRI.create("http://example.com/ontology#ParentClass"));
-            OWLClass childClass = factory.getOWLClass(IRI.create("http://example.com/ontology#ChildClass"));
+            OWLClass parentClass = factory.getOWLClass(IRI.create(ontologyIRI + "#ParentClass"));
+            OWLClass childClass = factory.getOWLClass(IRI.create(ontologyIRI + "#ChildClass"));
             OWLSubClassOfAxiom subclassAxiom = factory.getOWLSubClassOfAxiom(childClass, parentClass);
             manager.addAxiom(ontology, subclassAxiom);
 
             // Create a new class
-            OWLClass newClass = factory.getOWLClass(IRI.create("http://example.com/ontology#NewClass"));
+            OWLClass newClass = factory.getOWLClass(IRI.create(ontologyIRI + "#NewClass"));
             OWLDeclarationAxiom declarationAxiom = factory.getOWLDeclarationAxiom(newClass);
             manager.addAxiom(ontology, declarationAxiom);
+
+            // Create an OWL object property
+            OWLObjectProperty hasPart = factory.getOWLObjectProperty(IRI.create(ontologyIRI + "#ParentClass" + "#hasPart"));
+
+            // Add a functional property axiom to the ontology
+            OWLAxiom axiom = manager.getOWLDataFactory().getOWLFunctionalObjectPropertyAxiom(hasPart);
+            manager.applyChange(new AddAxiom(ontology, axiom));
 
             // Save the ontology to a file
             File fileout = new File("src/OWLOutput/owl-file2.xml");
