@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-public class SamleBuilder {
+public class SampleBuilder {
 
     public static void main(String[] args) throws OWLOntologyCreationException, OWLOntologyStorageException {
 

@@ -10,30 +10,33 @@ import java.io.IOException;
 
 public class JsonFileReader {
     public static void main(String[] args) {
+
+    }
+    public static JsonArray GetTaxonomies(String jsonPath) {
         Gson gson = new Gson();
 
-        try (FileReader reader = new FileReader("/home/ddhash/IdeaProjects/owl-api/src/main/java/org/ontobot/response.json")) {
+        try (FileReader reader = new FileReader(jsonPath)) {
             JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
             // use jsonObject to access the data
             JsonObject msg = jsonObject.getAsJsonObject("msg");
             JsonArray concepts = msg.getAsJsonArray("concepts");
-            JsonArray taxonomies = msg.getAsJsonArray("taxonomy");
 
-            recPrint(taxonomies);
+            return msg.getAsJsonArray("taxonomy");
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
-    public static void recPrint(JsonArray taxonomies) {
+    public static void RecPrint(JsonArray taxonomies) {
         for (JsonElement taxo : taxonomies) {
             JsonObject classObject = taxo.getAsJsonObject();
             String class_name = classObject.get("class_name").getAsString();
             int level = classObject.get("level").getAsInt();
             System.out.println(class_name + " - " + level);
             if (classObject.has("sub_classes")) {
-                recPrint((JsonArray) classObject.get("sub_classes"));
+                RecPrint((JsonArray) classObject.get("sub_classes"));
                 System.out.println("-----");
             }
 

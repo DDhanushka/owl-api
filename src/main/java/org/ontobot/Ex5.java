@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-public class Ex4 {
+public class Ex5 {
     public static void main(String[] args) {
 
         IRI ontologyIRI = IRI.create("http://example.com/ontology");

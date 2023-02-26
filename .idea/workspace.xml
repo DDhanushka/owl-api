@@ -4,19 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a410bd3e-90cd-476a-8b51-ab98cc087899" name="Changes" comment="Add example 5">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/Ex4.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/JsonFileReader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/OntologyBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/Reader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/SamleBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/employees.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/jj.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/response.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/ss.java" afterDir="false" />
+    <list default="true" id="a410bd3e-90cd-476a-8b51-ab98cc087899" name="Changes" comment="print taxo">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/Ex4.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/Ex5.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/JsonFileReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/JsonFileReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/OntologyBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/OntologyBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/SamleBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/SampleBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/employees.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/jj.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,14 +56,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/ddhash/IdeaProjects/owl-api/src/main/java/org/ontobot&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.import&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "last_opened_file_path": "/home/ddhash/IdeaProjects/owl-api/src/main/java/org/ontobot",
+    "settings.editor.selected.configurable": "editor.preferences.import"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/java/org/ontobot" />
@@ -75,13 +73,13 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.JsonFileReader">
-    <configuration name="Ex4" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.Ex4" />
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Ex5" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.ontobot.Ex5" />
       <module name="owl-api" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.*" />
+          <option name="PATTERN" value="org.ontobot.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -102,12 +100,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OntologyBuilder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.OntologyBuilder" />
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.ontobot.Main" />
       <module name="owl-api" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.*" />
+          <option name="PATTERN" value="org.ontobot.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -115,8 +113,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ReadJSONExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.ontobot.ReadJSONExample" />
+    <configuration name="OntologyBuilder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.ontobot.OntologyBuilder" />
       <module name="owl-api" />
       <extension name="coverage">
         <pattern>
@@ -143,11 +141,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.OntologyBuilder" />
+        <item itemvalue="Application.Ex5" />
         <item itemvalue="Application.JsonFileReader" />
         <item itemvalue="Application.Reader" />
-        <item itemvalue="Application.ReadJSONExample" />
-        <item itemvalue="Application.Ex4" />
-        <item itemvalue="Application.OntologyBuilder" />
       </list>
     </recent_temporary>
   </component>
@@ -188,7 +186,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677127240098</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="print taxo">
+      <created>1677415431591</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1677415431591</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -208,6 +213,7 @@
     <MESSAGE value="Create simple ontolgy" />
     <MESSAGE value="To create an ontology using taxonomy levels, relationships, and attributes in OWLAPI" />
     <MESSAGE value="Add example 5" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add example 5" />
+    <MESSAGE value="print taxo" />
+    <option name="LAST_COMMIT_MESSAGE" value="print taxo" />
   </component>
 </project>
