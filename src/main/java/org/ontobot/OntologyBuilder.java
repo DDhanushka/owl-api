@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.formats.FunctionalSyntaxDocumentFormat;
 import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.vocab.OWL2Datatype;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,10 +15,10 @@ import java.util.Objects;
 
 public class OntologyBuilder {
 
-    private  OWLOntologyManager manager;
-    private OWLDataFactory dataFactory ;
-    private  IRI ontologyIRI;
-    private  OWLOntology ontology;
+    private OWLOntologyManager manager;
+    private OWLDataFactory dataFactory;
+    private IRI ontologyIRI;
+    private OWLOntology ontology;
 
     private OWLClass owlClass;
 
@@ -35,7 +36,6 @@ public class OntologyBuilder {
     }
 
     public void Build(String[] classNames, String[] relationshipNames, String[] attributeNames, JsonArray taxonomies) {
-
 
 
         try {
@@ -125,15 +125,31 @@ public class OntologyBuilder {
             JsonObject classObject = taxo.getAsJsonObject();
             String class_name = classObject.get("class_name").getAsString();
             int level = classObject.get("level").getAsInt();
+            JsonArray attributes = classObject.get("attributes").getAsJsonArray();
+
+//            System.out.println(attributes);
 
 
             try {
                 if (Objects.equals(superClazz, "")) {
                     System.out.println(class_name);
-                    System.out.println(ontologyIRI + "#" + class_name);
+
                     OWLClass clazz = this.dataFactory.getOWLClass(IRI.create(ontologyIRI + "#" + class_name.replace(" ", "_")));
                     manager.addAxiom(this.ontology, dataFactory.getOWLDeclarationAxiom(clazz));
-//                    System.out.println(ontologyIRI + "#" + "abc");
+                    for (JsonElement attr : attributes) {
+                        JsonObject attrObj = attr.getAsJsonObject();
+                        String name = attrObj.get("name").getAsString();
+                        System.out.println(name);
+                        OWLDataProperty dataProp = dataFactory.getOWLDataProperty(IRI.create(ontologyIRI + "#" + name.replace(" ", "_")));
+
+                        OWLDataPropertyDomainAxiom hasAgeDomain = dataFactory.getOWLDataPropertyDomainAxiom(dataProp, clazz);
+                        OWLDataPropertyRangeAxiom hasAgeRange = dataFactory.getOWLDataPropertyRangeAxiom(dataProp, dataFactory.getOWLDatatype(OWL2Datatype.XSD_INT));
+                        manager.addAxiom(this.ontology, hasAgeDomain);
+                        manager.addAxiom(this.ontology, hasAgeRange);
+
+                    }
+
+
                 } else {
                     OWLClass subClazz = dataFactory.getOWLClass(IRI.create(ontologyIRI + "#" + class_name.replace(" ", "_")));
                     OWLClass supClazz = dataFactory.getOWLClass(IRI.create(ontologyIRI + "#" + superClazz.replace(" ", "_")));
@@ -142,7 +158,7 @@ public class OntologyBuilder {
 
                 }
             } catch (NullPointerException e) {
-                System.out.println("NullPointerException thrown!"+e);
+                System.out.println("NullPointerException thrown!" + e);
             }
 
 

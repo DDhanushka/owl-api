@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a410bd3e-90cd-476a-8b51-ab98cc087899" name="Changes" comment="fix null error">
+    <list default="true" id="a410bd3e-90cd-476a-8b51-ab98cc087899" name="Changes" comment="Remove spaces from class names">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/OntologyBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/OntologyBuilder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -201,7 +200,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677471462962</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Remove spaces from class names">
+      <created>1677472113310</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1677472113310</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -224,6 +230,7 @@
     <MESSAGE value="print taxo" />
     <MESSAGE value="commit with null error" />
     <MESSAGE value="fix null error" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix null error" />
+    <MESSAGE value="Remove spaces from class names" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove spaces from class names" />
   </component>
 </project>
