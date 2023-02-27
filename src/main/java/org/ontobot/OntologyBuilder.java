@@ -24,10 +24,14 @@ public class OntologyBuilder {
     public static void main(String[] args) {
     }
 
-    public OntologyBuilder(){
+    public OntologyBuilder() throws OWLOntologyCreationException {
         // Create the OWLOntologyManager and the OWLDataFactory
         this.manager = OWLManager.createOWLOntologyManager();
         this.dataFactory = manager.getOWLDataFactory();
+
+        // Create the ontology and the namespace IRI
+        this.ontologyIRI = IRI.create("http://example.com/ontology");
+        this.ontology = manager.createOntology(ontologyIRI);
     }
 
     public void Build(String[] classNames, String[] relationshipNames, String[] attributeNames, JsonArray taxonomies) {
@@ -35,9 +39,7 @@ public class OntologyBuilder {
 
 
         try {
-            // Create the ontology and the namespace IRI
-            ontologyIRI = IRI.create("http://example.com/ontology");
-            OWLOntology ontology = manager.createOntology(ontologyIRI);
+
 
 //            // Loop through the classes and add them to the ontology
 //            for (String className : classNames) {
@@ -110,7 +112,7 @@ public class OntologyBuilder {
             File fileout = new File("src/OWLOutput/" + outputOwlFileName);
             manager.saveOntology(ontology, new FunctionalSyntaxDocumentFormat(), new FileOutputStream(fileout));
 
-        } catch (OWLOntologyCreationException | OWLOntologyStorageException e) {
+        } catch (OWLOntologyStorageException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -129,13 +131,13 @@ public class OntologyBuilder {
                 if (Objects.equals(superClazz, "")) {
                     System.out.println(class_name);
                     System.out.println(ontologyIRI + "#" + class_name);
-                    this.owlClass = this.dataFactory.getOWLClass(IRI.create("http://example.com/ontology#Person"));
-                    manager.addAxiom(ontology, dataFactory.getOWLDeclarationAxiom(clazz));
+                    OWLClass clazz = this.dataFactory.getOWLClass(IRI.create(ontologyIRI + "#" + class_name.replace(" ", "_")));
+                    manager.addAxiom(this.ontology, dataFactory.getOWLDeclarationAxiom(clazz));
 //                    System.out.println(ontologyIRI + "#" + "abc");
                 } else {
-                    OWLClass subClazz = dataFactory.getOWLClass(IRI.create(ontologyIRI + "#" + class_name));
-                    OWLClass supClazz = dataFactory.getOWLClass(IRI.create(ontologyIRI + "#" + superClazz));
-                    manager.addAxiom(ontology, dataFactory.getOWLSubClassOfAxiom(subClazz, supClazz));
+                    OWLClass subClazz = dataFactory.getOWLClass(IRI.create(ontologyIRI + "#" + class_name.replace(" ", "_")));
+                    OWLClass supClazz = dataFactory.getOWLClass(IRI.create(ontologyIRI + "#" + superClazz.replace(" ", "_")));
+                    manager.addAxiom(this.ontology, dataFactory.getOWLSubClassOfAxiom(subClazz, supClazz));
                     System.out.println(class_name + " -> " + superClazz);
 
                 }
