@@ -14,23 +14,29 @@ import java.util.Objects;
 
 public class OntologyBuilder {
 
-    private static OWLOntologyManager manager;
-    private static OWLDataFactory dataFactory;
-    private static IRI ontologyIRI;
-    private static OWLOntology ontology;
+    private  OWLOntologyManager manager;
+    private OWLDataFactory dataFactory ;
+    private  IRI ontologyIRI;
+    private  OWLOntology ontology;
+
+    private OWLClass owlClass;
 
     public static void main(String[] args) {
     }
 
-    public static void Build(String[] classNames, String[] relationshipNames, String[] attributeNames, JsonArray taxonomies) {
-
+    public OntologyBuilder(){
         // Create the OWLOntologyManager and the OWLDataFactory
-        OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-        OWLDataFactory dataFactory = manager.getOWLDataFactory();
+        this.manager = OWLManager.createOWLOntologyManager();
+        this.dataFactory = manager.getOWLDataFactory();
+    }
+
+    public void Build(String[] classNames, String[] relationshipNames, String[] attributeNames, JsonArray taxonomies) {
+
+
 
         try {
             // Create the ontology and the namespace IRI
-            IRI ontologyIRI = IRI.create("http://example.com/ontology");
+            ontologyIRI = IRI.create("http://example.com/ontology");
             OWLOntology ontology = manager.createOntology(ontologyIRI);
 
 //            // Loop through the classes and add them to the ontology
@@ -111,7 +117,7 @@ public class OntologyBuilder {
         }
     }
 
-    public static void AddClasses(JsonArray taxonomies, String superClazz) {
+    public void AddClasses(JsonArray taxonomies, String superClazz) {
 
         for (JsonElement taxo : taxonomies) {
             JsonObject classObject = taxo.getAsJsonObject();
@@ -121,18 +127,20 @@ public class OntologyBuilder {
 
             try {
                 if (Objects.equals(superClazz, "")) {
-                    OWLClass clazz = dataFactory.getOWLClass(IRI.create(ontologyIRI + "#" + class_name));
+                    System.out.println(class_name);
+                    System.out.println(ontologyIRI + "#" + class_name);
+                    this.owlClass = this.dataFactory.getOWLClass(IRI.create("http://example.com/ontology#Person"));
                     manager.addAxiom(ontology, dataFactory.getOWLDeclarationAxiom(clazz));
-                    System.out.println("null");
+//                    System.out.println(ontologyIRI + "#" + "abc");
                 } else {
-//                    OWLClass subClazz = dataFactory.getOWLClass(IRI.create(ontologyIRI + "#" + class_name));
-//                    OWLClass supClazz = dataFactory.getOWLClass(IRI.create(ontologyIRI + "#" + superClazz));
-//                    manager.addAxiom(ontology, dataFactory.getOWLSubClassOfAxiom(subClazz, supClazz));
+                    OWLClass subClazz = dataFactory.getOWLClass(IRI.create(ontologyIRI + "#" + class_name));
+                    OWLClass supClazz = dataFactory.getOWLClass(IRI.create(ontologyIRI + "#" + superClazz));
+                    manager.addAxiom(ontology, dataFactory.getOWLSubClassOfAxiom(subClazz, supClazz));
                     System.out.println(class_name + " -> " + superClazz);
 
                 }
             } catch (NullPointerException e) {
-                System.out.println("NullPointerException thrown!");
+                System.out.println("NullPointerException thrown!"+e);
             }
 
 

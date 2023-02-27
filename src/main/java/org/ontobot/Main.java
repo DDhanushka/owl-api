@@ -16,7 +16,8 @@ public class Main {
         String[] attributeNames = {"hasAge", "hasSalary"};
 
         assert taxonomies != null;
-        OntologyBuilder.Build(classNames, relationshipNames, attributeNames, taxonomies);
+        OntologyBuilder ontologyBuilder = new OntologyBuilder();
+        ontologyBuilder.Build(classNames, relationshipNames, attributeNames, taxonomies);
 
 
     }
