@@ -26,7 +26,7 @@
           {
             "id": "619e4567-e89b-12d3-a456-537614174000",
             "name": "age",
-            "datatype": "int",
+            "datatype": "integer",
             "restrictions": "non zero",
             "functional": false
           }
@@ -59,7 +59,7 @@
           {
             "id": "0",
             "name": "ID",
-            "datatype": "int",
+            "datatype": "integer",
             "restrictions": "non zero",
             "functional": true
           },
@@ -80,7 +80,7 @@
               {
                 "id": "123e4567-e89b-12d3-a456-426614174000",
                 "name": "Toxic Level",
-                "datatype": "int",
+                "datatype": "float",
                 "restrictions": "not null",
                 "functional": true
               }
@@ -94,7 +94,7 @@
               {
                 "id": "123e4567-e89b-12d3-a456-426614174000",
                 "name": "Innocent Level",
-                "datatype": "int",
+                "datatype": "integer",
                 "restrictions": "not null",
                 "functional": true
               }
@@ -110,7 +110,7 @@
           {
             "id": "123e4567-e89b-12d3-a456-426614174000",
             "name": "Toxic Level",
-            "datatype": "int",
+            "datatype": "float",
             "restrictions": "not null",
             "functional": true
           }
@@ -132,7 +132,7 @@
           {
             "id": "0",
             "name": "ID",
-            "datatype": "int",
+            "datatype": "integer",
             "restrictions": "non zero",
             "functional": true
           },

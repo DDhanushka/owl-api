@@ -5,8 +5,9 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
 public class Main {
     public static void main(String[] args) throws OWLOntologyCreationException {
-        String filepath = "/home/ddhash/IdeaProjects/owl-api/src/main/java/org/ontobot/response.json";
+        String filepath = "C://GitHub/owl-API/owl-api/src/main/java/org/ontobot/response.json";
         JsonArray taxonomies = JsonFileReader.GetTaxonomies(filepath);
+        String[] concepts = JsonFileReader.GetConcepts(filepath);
 //        if (taxonomies != null)
 //            JsonFileReader.RecPrint(taxonomies);
 
@@ -17,9 +18,10 @@ public class Main {
         String[] attributeNames = {"hasAge", "hasSalary"};
 
         assert taxonomies != null;
-        OntologyBuilder ontologyBuilder = new OntologyBuilder();
-        ontologyBuilder.Build(classNames, relationshipNames, attributeNames, taxonomies);
+//        OntologyBuilder ontologyBuilder = new OntologyBuilder();
+//        ontologyBuilder.Build(classNames, relationshipNames, attributeNames, taxonomies);
 
-
+        OntoBuilder ontoBuilder = new OntoBuilder();
+        ontoBuilder.build(concepts, taxonomies);
     }
 }

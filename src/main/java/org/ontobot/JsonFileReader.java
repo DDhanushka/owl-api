@@ -19,9 +19,30 @@ public class JsonFileReader {
             JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
             // use jsonObject to access the data
             JsonObject msg = jsonObject.getAsJsonObject("msg");
-            JsonArray concepts = msg.getAsJsonArray("concepts");
 
             return msg.getAsJsonArray("taxonomy");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String[] GetConcepts(String jsonPath) {
+        Gson gson = new Gson();
+
+        try (FileReader reader = new FileReader(jsonPath)) {
+            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+            // use jsonObject to access the data
+            JsonObject msg = jsonObject.getAsJsonObject("msg");
+
+            JsonArray jsonArray = msg.getAsJsonArray("concepts");
+
+            String[] stringArray = new String[jsonArray.size()];
+            for (int i = 0; i < jsonArray.size(); i++) {
+                stringArray[i] = jsonArray.get(i).toString();
+            }
+            return stringArray;
 
         } catch (IOException e) {
             e.printStackTrace();
