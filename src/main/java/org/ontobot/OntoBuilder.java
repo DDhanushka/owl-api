@@ -12,6 +12,7 @@ import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -38,6 +39,7 @@ public class OntoBuilder {
 
     public void build(String[] concepts, JsonArray taxonomies){
         try {
+            // Define concepts
             for (String concept : concepts) {
                 String class_name = concept.substring(1, concept.length() - 1);
                 System.out.println(class_name);
@@ -46,8 +48,8 @@ public class OntoBuilder {
                 this.manager.addAxiom(this.ontology, this.dataFactory.getOWLDeclarationAxiom(clazz));
             }
 
-            for (JsonElement taxonomy:
-                 taxonomies) {
+            // Define Taxonomies with Data properties
+            for (JsonElement taxonomy: taxonomies) {
                 JsonObject classObject = taxonomy.getAsJsonObject();
                 String className = classObject.get("class_name").getAsString(); // superClass
                 JsonArray attributes = classObject.get("attributes").getAsJsonArray();
@@ -57,8 +59,14 @@ public class OntoBuilder {
                         JsonObject attrObj = attr.getAsJsonObject();
                         String name = attrObj.get("name").getAsString();
                         String type = attrObj.get("datatype").getAsString();
+                        boolean isFunctional = attrObj.get("functional").getAsBoolean();
 
                         OWLDataProperty dataProperty = this.dataFactory.getOWLDataProperty(IRI.create(this.ontologyIRI + "#" + name.replace(" ", "_")));
+
+                        if (isFunctional){
+                            OWLFunctionalDataPropertyAxiom axiom = this.dataFactory.getOWLFunctionalDataPropertyAxiom(dataProperty);
+                            manager.addAxiom(this.ontology, axiom);
+                        }
 
                         OWLDataPropertyDomainAxiom domainProperty = this.dataFactory.getOWLDataPropertyDomainAxiom(dataProperty, this.hashMap.get(className));
                         OWLDataPropertyRangeAxiom rangeProperty = this.dataFactory.getOWLDataPropertyRangeAxiom(dataProperty, this.dataFactory.getOWLDatatype(getPropertyType(type)));
@@ -82,8 +90,14 @@ public class OntoBuilder {
                                 JsonObject attrObj = attr.getAsJsonObject();
                                 String name = attrObj.get("name").getAsString();
                                 String type = attrObj.get("datatype").getAsString();
+                                boolean isFunctional = attrObj.get("functional").getAsBoolean();
 
                                 OWLDataProperty dataProperty = dataFactory.getOWLDataProperty(IRI.create(this.ontologyIRI + "#" + name.replace(" ", "_")));
+
+                                if (isFunctional){
+                                    OWLFunctionalDataPropertyAxiom axiom = this.dataFactory.getOWLFunctionalDataPropertyAxiom(dataProperty);
+                                    manager.addAxiom(this.ontology, axiom);
+                                }
 
                                 OWLDataPropertyDomainAxiom domainProperty = dataFactory.getOWLDataPropertyDomainAxiom(dataProperty, this.hashMap.get(subClassName));
                                 OWLDataPropertyRangeAxiom rangeProperty = dataFactory.getOWLDataPropertyRangeAxiom(dataProperty, dataFactory.getOWLDatatype(getPropertyType(type)));
@@ -99,11 +113,11 @@ public class OntoBuilder {
 
             }
 
-            // Save the ontology to a file
-            String outputOwlFileName = "OWL-OUT.owl";
-            File fileOut = new File("C://GitHub/owl-API/owl-api/src/OWLOutput/" + outputOwlFileName);
-            this.manager.saveOntology(this.ontology, new FunctionalSyntaxDocumentFormat(), new FileOutputStream(fileOut));
+            // Define Object properties
 
+
+            // Save the ontology to a file and check the consistency
+            saveOntology(this.ontology);
             checkConsistency(this.ontology);
 
         }catch (Exception e){
@@ -153,5 +167,12 @@ public class OntoBuilder {
 
         // dispose the reasoner
         reasoner.dispose();
+    }
+
+    private void saveOntology(OWLOntology fetchedOntology) throws FileNotFoundException, OWLOntologyStorageException {
+        // Save the ontology to a file
+        String outputOwlFileName = "OWL-OUT.owl";
+        File fileOut = new File("C://GitHub/owl-API/owl-api/src/OWLOutput/" + outputOwlFileName);
+        this.manager.saveOntology(fetchedOntology, new FunctionalSyntaxDocumentFormat(), new FileOutputStream(fileOut));
     }
 }
