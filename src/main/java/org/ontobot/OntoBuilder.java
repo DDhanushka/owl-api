@@ -14,10 +14,7 @@ import org.semanticweb.owlapi.vocab.OWL2Datatype;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class OntoBuilder {
     private OWLOntologyManager manager;
@@ -53,7 +50,9 @@ public class OntoBuilder {
                 JsonObject classObject = taxonomy.getAsJsonObject();
                 String className = classObject.get("class_name").getAsString(); // superClass
                 JsonArray attributes = classObject.get("attributes").getAsJsonArray();
+                JsonArray disjointConcepts = classObject.get("disjoint").getAsJsonArray();
 
+                // set superclass data properties
                 if (!addedConcepts.contains(className)){
                     for (JsonElement attr : attributes) {
                         JsonObject attrObj = attr.getAsJsonObject();
@@ -62,18 +61,12 @@ public class OntoBuilder {
                         boolean isFunctional = attrObj.get("functional").getAsBoolean();
 
                         OWLDataProperty dataProperty = this.dataFactory.getOWLDataProperty(IRI.create(this.ontologyIRI + "#" + name.replace(" ", "_")));
+                        defineDataProperty(dataProperty, className, isFunctional, type);
 
-                        if (isFunctional){
-                            OWLFunctionalDataPropertyAxiom axiom = this.dataFactory.getOWLFunctionalDataPropertyAxiom(dataProperty);
-                            manager.addAxiom(this.ontology, axiom);
-                        }
-
-                        OWLDataPropertyDomainAxiom domainProperty = this.dataFactory.getOWLDataPropertyDomainAxiom(dataProperty, this.hashMap.get(className));
-                        OWLDataPropertyRangeAxiom rangeProperty = this.dataFactory.getOWLDataPropertyRangeAxiom(dataProperty, this.dataFactory.getOWLDatatype(getPropertyType(type)));
-                        manager.addAxiom(this.ontology, domainProperty);
-                        manager.addAxiom(this.ontology, rangeProperty);
                     }
                 }
+
+
 
                 if (classObject.has("sub_classes")){
                     JsonArray subClasses = classObject.get("sub_classes").getAsJsonArray();
@@ -93,22 +86,39 @@ public class OntoBuilder {
                                 boolean isFunctional = attrObj.get("functional").getAsBoolean();
 
                                 OWLDataProperty dataProperty = dataFactory.getOWLDataProperty(IRI.create(this.ontologyIRI + "#" + name.replace(" ", "_")));
+                                defineDataProperty(dataProperty, subClassName, isFunctional, type);
 
-                                if (isFunctional){
-                                    OWLFunctionalDataPropertyAxiom axiom = this.dataFactory.getOWLFunctionalDataPropertyAxiom(dataProperty);
-                                    manager.addAxiom(this.ontology, axiom);
-                                }
-
-                                OWLDataPropertyDomainAxiom domainProperty = dataFactory.getOWLDataPropertyDomainAxiom(dataProperty, this.hashMap.get(subClassName));
-                                OWLDataPropertyRangeAxiom rangeProperty = dataFactory.getOWLDataPropertyRangeAxiom(dataProperty, dataFactory.getOWLDatatype(getPropertyType(type)));
-                                manager.addAxiom(this.ontology, domainProperty);
-                                manager.addAxiom(this.ontology, rangeProperty);
                             }
                         }
                         this.addedConcepts.add(subClassName);
                     }
 
                     this.addedConcepts.add(className);
+                }
+
+                // set disjoint properties
+                if (disjointConcepts.size() > 0){
+                    List<OWLClassExpression> disjointList = new ArrayList<>();
+                    for (JsonElement disjointSet: disjointConcepts) {
+                        if (disjointSet.isJsonArray()) {
+                            JsonArray jsonArray = disjointSet.getAsJsonArray(); // convert JsonElement to JsonArray
+
+                            String[] stringArray = new String[jsonArray.size()]; // create new String array with same size as JsonArray
+
+                            for (int i = 0; i < jsonArray.size(); i++) {
+                                stringArray[i] = jsonArray.get(i).getAsString(); // convert each JsonElement to String and add to string array
+                                disjointList.add(this.hashMap.get(stringArray[i]));
+                            }
+
+                            if (disjointList.size() > 0){
+                                // create the disjoint classes axiom
+                                OWLDisjointClassesAxiom axiom = this.dataFactory.getOWLDisjointClassesAxiom(disjointList);
+                                // add the axiom to the ontology
+                                manager.addAxiom(ontology, axiom);
+                            }
+
+                        }
+                    }
                 }
 
             }
@@ -167,6 +177,18 @@ public class OntoBuilder {
 
         // dispose the reasoner
         reasoner.dispose();
+    }
+
+    private void defineDataProperty(OWLDataProperty owlDataProperty, String className, boolean isFunctional, String type){
+        if (isFunctional){
+            OWLFunctionalDataPropertyAxiom axiom = this.dataFactory.getOWLFunctionalDataPropertyAxiom(owlDataProperty);
+            this.manager.addAxiom(this.ontology, axiom);
+        }
+
+        OWLDataPropertyDomainAxiom domainProperty = dataFactory.getOWLDataPropertyDomainAxiom(owlDataProperty, this.hashMap.get(className));
+        OWLDataPropertyRangeAxiom rangeProperty = dataFactory.getOWLDataPropertyRangeAxiom(owlDataProperty, dataFactory.getOWLDatatype(getPropertyType(type)));
+        this.manager.addAxiom(this.ontology, domainProperty);
+        this.manager.addAxiom(this.ontology, rangeProperty);
     }
 
     private void saveOntology(OWLOntology fetchedOntology) throws FileNotFoundException, OWLOntologyStorageException {

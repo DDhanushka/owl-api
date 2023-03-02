@@ -69,6 +69,13 @@
             "datatype": "string",
             "restrictions": "not null",
             "functional": true
+          },
+          {
+            "id": "619e4567-e89b-12d3-a456-537614174000",
+            "name": "age",
+            "datatype": "string",
+            "restrictions": "non zero",
+            "functional": false
           }
         ],
         "disjoint": [],
