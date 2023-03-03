@@ -34,7 +34,7 @@ public class OntoBuilder {
         this.ontology = this.manager.createOntology(this.ontologyIRI);
     }
 
-    public void build(String[] concepts, JsonArray taxonomies){
+    public void build(String[] concepts, JsonArray taxonomies, JsonArray... ops){
         try {
             // Define concepts
             for (String concept : concepts) {
@@ -57,7 +57,7 @@ public class OntoBuilder {
                     for (JsonElement attr : attributes) {
                         JsonObject attrObj = attr.getAsJsonObject();
                         String name = attrObj.get("name").getAsString();
-                        String type = attrObj.get("datatype").getAsString();
+                        String type = attrObj.get("datatype").getAsString().toLowerCase();
                         boolean isFunctional = attrObj.get("functional").getAsBoolean();
 
                         OWLDataProperty dataProperty = this.dataFactory.getOWLDataProperty(IRI.create(this.ontologyIRI + "#" + name.replace(" ", "_")));
@@ -82,7 +82,7 @@ public class OntoBuilder {
                             for (JsonElement attr : subAttributes) {
                                 JsonObject attrObj = attr.getAsJsonObject();
                                 String name = attrObj.get("name").getAsString();
-                                String type = attrObj.get("datatype").getAsString();
+                                String type = attrObj.get("datatype").getAsString().toLowerCase();
                                 boolean isFunctional = attrObj.get("functional").getAsBoolean();
 
                                 OWLDataProperty dataProperty = dataFactory.getOWLDataProperty(IRI.create(this.ontologyIRI + "#" + name.replace(" ", "_")));
@@ -124,7 +124,9 @@ public class OntoBuilder {
             }
 
             // Define Object properties
-
+            if (ops.length == 0){
+                System.out.println("It is empty array");
+            }
 
             // Save the ontology to a file and check the consistency
             saveOntology(this.ontology);

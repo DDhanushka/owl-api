@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a410bd3e-90cd-476a-8b51-ab98cc087899" name="Changes" comment="Remove spaces from class names">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/newresponse.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/OntoBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/OntoBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/response.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/response.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
