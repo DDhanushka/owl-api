@@ -79,7 +79,7 @@ public class OntologyBuilder {
 //            }
 
             AddClasses(taxonomies, "");
-
+            DefineDisjoint(taxonomies);
 
             // Loop through the relationships and add them to the ontology
 //            for (String relationshipName : relationshipNames) {
@@ -127,19 +127,16 @@ public class OntologyBuilder {
             int level = classObject.get("level").getAsInt();
             JsonArray attributes = classObject.get("attributes").getAsJsonArray();
 
-//            System.out.println(attributes);
-
-
             try {
                 if (Objects.equals(superClazz, "")) {
                     System.out.println(class_name);
-
                     OWLClass clazz = this.dataFactory.getOWLClass(IRI.create(ontologyIRI + "#" + class_name.replace(" ", "_")));
                     manager.addAxiom(this.ontology, dataFactory.getOWLDeclarationAxiom(clazz));
+
                     for (JsonElement attr : attributes) {
                         JsonObject attrObj = attr.getAsJsonObject();
                         String name = attrObj.get("name").getAsString();
-                        System.out.println(name);
+                        System.out.println("-" + name);
                         OWLDataProperty dataProp = dataFactory.getOWLDataProperty(IRI.create(ontologyIRI + "#" + name.replace(" ", "_")));
 
                         OWLDataPropertyDomainAxiom hasAgeDomain = dataFactory.getOWLDataPropertyDomainAxiom(dataProp, clazz);
@@ -167,6 +164,27 @@ public class OntologyBuilder {
                 System.out.println("-----");
             }
 
+        }
+
+
+
+    }
+
+    public void DefineDisjoint(JsonArray taxonomies) {
+        System.out.println("\n");
+        for (JsonElement taxo : taxonomies) {
+            JsonObject classObject = taxo.getAsJsonObject();
+            String class_name = classObject.get("class_name").getAsString();
+            JsonArray disjoints = classObject.get("disjoint").getAsJsonArray();
+            System.out.println("*" + class_name);
+
+            for (JsonElement disjo : disjoints) {
+
+            }
+
+
+//            OWLDisjointClassesAxiom disjointClassesAxiom = dataFactory.getOWLDisjointClassesAxiom(student, teacher);
+//            manager.addAxiom(ontology, disjointClassesAxiom);
         }
     }
 

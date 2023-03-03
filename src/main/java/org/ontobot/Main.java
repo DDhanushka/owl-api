@@ -5,7 +5,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
 public class Main {
     public static void main(String[] args) throws OWLOntologyCreationException {
-        String filepath = "C://GitHub/owl-API/owl-api/src/main/java/org/ontobot/newresponse.json";
+        String filepath = "src/main/java/org/ontobot/newresponse.json";
         JsonArray taxonomies = JsonFileReader.GetTaxonomies(filepath);
         String[] concepts = JsonFileReader.GetConcepts(filepath);
 //        if (taxonomies != null)

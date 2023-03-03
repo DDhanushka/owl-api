@@ -5,10 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a410bd3e-90cd-476a-8b51-ab98cc087899" name="Changes" comment="Remove spaces from class names">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/newresponse.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CreateOnto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Ex3.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Ex4.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/OntologyBuilder.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/OntoBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/OntoBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/OntologyBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/OntologyBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/Reader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/SampleBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/ss.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +36,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -223,5 +231,15 @@
     <MESSAGE value="fix null error" />
     <MESSAGE value="Remove spaces from class names" />
     <option name="LAST_COMMIT_MESSAGE" value="Remove spaces from class names" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jrt:///usr/lib/jvm/java-1.11.0-openjdk-amd64!/java.base/java/io/FileNotFoundException.class</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

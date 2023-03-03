@@ -195,7 +195,7 @@ public class OntoBuilder {
 
     private void saveOntology(OWLOntology fetchedOntology) throws FileNotFoundException, OWLOntologyStorageException {
         // Save the ontology to a file
-        String outputOwlFileName = "OWL-OUT.owl";
+        String outputOwlFileName = "OWL-OUT2.owl";
         File fileOut = new File("C://GitHub/owl-API/owl-api/src/OWLOutput/" + outputOwlFileName);
         this.manager.saveOntology(fetchedOntology, new FunctionalSyntaxDocumentFormat(), new FileOutputStream(fileOut));
     }
