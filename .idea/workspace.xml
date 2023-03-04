@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a410bd3e-90cd-476a-8b51-ab98cc087899" name="Changes" comment="Delete unnecessary files and change paths to relative.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/JsonReqBodyReader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/OntoService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/endpoints.txt" afterDir="false" />
+    <list default="true" id="a410bd3e-90cd-476a-8b51-ab98cc087899" name="Changes" comment="Implement /taxonomy/generate endpoint">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/OntoBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/OntoBuilder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,7 +204,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677849318469</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Implement /taxonomy/generate endpoint">
+      <created>1677899459208</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1677899459208</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -233,7 +236,8 @@
     <MESSAGE value="fix null error" />
     <MESSAGE value="Remove spaces from class names" />
     <MESSAGE value="Delete unnecessary files and change paths to relative." />
-    <option name="LAST_COMMIT_MESSAGE" value="Delete unnecessary files and change paths to relative." />
+    <MESSAGE value="Implement /taxonomy/generate endpoint" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement /taxonomy/generate endpoint" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
