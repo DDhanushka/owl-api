@@ -114,7 +114,7 @@
           }
         ],
         "disjoint": [],
-        "overlap": [],
+        "overlap": [["Toxic Student", "Innocent Student"]],
         "sub_classes": [
           {
             "class_name": "Toxic Student",

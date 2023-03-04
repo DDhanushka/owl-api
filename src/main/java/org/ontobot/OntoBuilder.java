@@ -24,6 +24,8 @@ public class OntoBuilder {
     private Hashtable<String, OWLClass> hashMap = new Hashtable<>();
     private List<String> addedConcepts = new ArrayList<>();
 
+    private int seqNumber = 0;
+
     public OntoBuilder() throws OWLOntologyCreationException {
         // Create the OWLOntologyManager and the OWLDataFactory
         this.manager = OWLManager.createOWLOntologyManager();
@@ -49,11 +51,20 @@ public class OntoBuilder {
             for (JsonElement taxonomy: taxonomies) {
                 JsonObject classObject = taxonomy.getAsJsonObject();
                 String className = classObject.get("class_name").getAsString(); // superClass
+                String level = classObject.get("level").getAsString();
                 JsonArray attributes = classObject.get("attributes").getAsJsonArray();
                 JsonArray disjointConcepts = classObject.get("disjoint").getAsJsonArray();
+                JsonArray overlapConcepts = classObject.get("overlap").getAsJsonArray();
 
                 // set superclass data properties
                 if (!addedConcepts.contains(className)){
+                    // define comment
+                    // Create the RDFS comment annotation
+                    OWLAnnotation commentAnnotation = this.dataFactory.getOWLAnnotation(
+                            this.dataFactory.getRDFSComment(),
+                            this.dataFactory.getOWLLiteral("This is a comment about MyClass"));
+
+
                     for (JsonElement attr : attributes) {
                         JsonObject attrObj = attr.getAsJsonObject();
                         String name = attrObj.get("name").getAsString();
@@ -73,12 +84,15 @@ public class OntoBuilder {
                     for (JsonElement subClass: subClasses) {
                         JsonObject subClassObject = subClass.getAsJsonObject();
                         String subClassName = subClassObject.get("class_name").getAsString(); // subClass
+                        String subLevel = subClassObject.get("level").getAsString();
                         JsonArray subAttributes = subClassObject.get("attributes").getAsJsonArray();
                         OWLClass subClazz = this.hashMap.get(subClassName);
                         OWLClass supClazz = this.hashMap.get(className);
                         this.manager.addAxiom(this.ontology, this.dataFactory.getOWLSubClassOfAxiom(subClazz, supClazz));
 
                         if (!addedConcepts.contains(subClassName)){
+                            // define comment
+
                             for (JsonElement attr : subAttributes) {
                                 JsonObject attrObj = attr.getAsJsonObject();
                                 String name = attrObj.get("name").getAsString();
@@ -117,8 +131,40 @@ public class OntoBuilder {
                                 manager.addAxiom(ontology, axiom);
                             }
 
+                            disjointList.clear();
+
                         }
                     }
+                }
+
+                // set overlap properties
+                if (overlapConcepts.size() > 0){
+                    List<OWLClassExpression> overlapList = new ArrayList<>();
+
+                    for (JsonElement overlapSet: overlapConcepts){
+                        if (overlapSet.isJsonArray()){
+                            JsonArray jsonArray = overlapSet.getAsJsonArray();
+
+                            String[] stringArray = new String[jsonArray.size()]; // create new String array with same size as JsonArray
+
+                            for (int i = 0; i < jsonArray.size(); i++) {
+                                stringArray[i] = jsonArray.get(i).getAsString(); // convert each JsonElement to String and add to string array
+                                overlapList.add(this.hashMap.get(stringArray[i]));
+                            }
+
+                            if (overlapList.size() > 0){
+                                // Create the union class
+                                OWLClass unionClass = this.dataFactory.getOWLClass(IRI.create(this.ontologyIRI + "#" + "Union" + Integer.toString(seqNumber))); seqNumber++;
+                                // Create the disjoint union axiom
+                                OWLDisjointUnionAxiom axiom = this.dataFactory.getOWLDisjointUnionAxiom(unionClass, overlapList);
+                                manager.addAxiom(ontology, axiom);
+                            }
+
+                            overlapList.clear();
+                        }
+                    }
+
+
                 }
 
             }
@@ -129,6 +175,7 @@ public class OntoBuilder {
                     JsonObject opObject = op.getAsJsonObject();
                     String propertyName = opObject.get("op_name").getAsString();
                     String inversePropertyName = opObject.get("op_inverse").getAsString();
+                    String comment = opObject.get("op_equal").getAsString();
                     String domain = opObject.get("op_domain").getAsString();
                     String range = opObject.get("op_range").getAsString();
 
@@ -138,6 +185,25 @@ public class OntoBuilder {
                     manager.addAxiom(this.ontology, dataFactory.getOWLObjectPropertyDomainAxiom(property, domainClass));
                     manager.addAxiom(this.ontology, dataFactory.getOWLObjectPropertyRangeAxiom(property, rangeClass));
 
+                    // add comments
+                    if (comment.length() > 0){
+                        // Create the RDFS label annotation for the object property
+                        OWLAnnotation labelAnnotation = this.dataFactory.getOWLAnnotation(
+                                this.dataFactory.getRDFSLabel(),
+                                this.dataFactory.getOWLLiteral(comment, "en"));
+
+                        // Create the RDFS comment annotation for the object property
+                        OWLAnnotation commentAnnotation = this.dataFactory.getOWLAnnotation(
+                                this.dataFactory.getRDFSComment(),
+                                this.dataFactory.getOWLLiteral(comment));
+
+                        // Add the annotations to the object property
+                        OWLAxiom labelAxiom = this.dataFactory.getOWLAnnotationAssertionAxiom(property.getIRI(), labelAnnotation);
+                        OWLAxiom commentAxiom = this.dataFactory.getOWLAnnotationAssertionAxiom(property.getIRI(), commentAnnotation);
+                        manager.applyChanges(Arrays.asList(new AddAxiom(ontology, labelAxiom), new AddAxiom(ontology, commentAxiom)));
+                    }
+
+                    // define inverse property
                     if (inversePropertyName.length() > 0) {
                         OWLObjectProperty inverseProperty = dataFactory.getOWLObjectProperty(IRI.create(this.ontologyIRI + "#" + inversePropertyName.replace(" ", "_")));
                         manager.addAxiom(this.ontology, dataFactory.getOWLInverseObjectPropertiesAxiom(property, inverseProperty));
