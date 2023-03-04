@@ -28,4 +28,8 @@ public class JsonReqBodyReader {
         }
         return stringArray;
     }
+
+    public JsonArray GetOps() {
+        return msg.getAsJsonArray("op");
+    }
 }
