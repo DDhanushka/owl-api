@@ -14,7 +14,9 @@
       "SE Degree",
       "Organization",
       "Toxic Female Student",
-      "School"
+      "School",
+      "Toxic Male Student",
+      "Graduate"
     ],
     "taxonomy": [
       {
@@ -112,7 +114,7 @@
           }
         ],
         "disjoint": [],
-        "overlap": [],
+        "overlap": [["Toxic Student", "Innocent Student"]],
         "sub_classes": [
           {
             "class_name": "Toxic Student",
@@ -126,7 +128,12 @@
                 "functional": true
               }
             ],
-            "disjoint": [],
+            "disjoint": [
+              [
+                "Toxic Male Student",
+                "Toxic Female Student"
+              ]
+            ],
             "overlap": []
           },
           {
@@ -158,11 +165,23 @@
             "functional": true
           }
         ],
-        "disjoint": [],
+        "disjoint": [
+          [
+            "Toxic Male Student",
+            "Toxic Female Student"
+          ]
+        ],
         "overlap": [],
         "sub_classes": [
           {
             "class_name": "Toxic Female Student",
+            "level": 2,
+            "attributes": [],
+            "disjoint": [],
+            "overlap": []
+          },
+          {
+            "class_name": "Toxic Male Student",
             "level": 2,
             "attributes": [],
             "disjoint": [],
@@ -401,6 +420,42 @@
           "functional": false,
           "inverseFunctional": false,
           "transitive": true,
+          "symmetric": false,
+          "asymmetric": false,
+          "reflexive": false,
+          "irreflexive": false
+        }
+      },
+      {
+        "id": 10,
+        "op_name": "has Degree",
+        "op_inverse": "is Degree of",
+        "op_equal": "",
+        "op_domain": "Graduate",
+        "op_range": "Degree",
+        "level": 0,
+        "constraints": {
+          "functional": true,
+          "inverseFunctional": false,
+          "transitive": false,
+          "symmetric": false,
+          "asymmetric": false,
+          "reflexive": false,
+          "irreflexive": false
+        }
+      },
+      {
+        "id": 11,
+        "op_name": "has University",
+        "op_inverse": "is University of",
+        "op_equal": "",
+        "op_domain": "Graduate",
+        "op_range": "University",
+        "level": 0,
+        "constraints": {
+          "functional": true,
+          "inverseFunctional": false,
+          "transitive": false,
           "symmetric": false,
           "asymmetric": false,
           "reflexive": false,

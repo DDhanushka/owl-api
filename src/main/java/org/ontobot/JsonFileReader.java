@@ -28,6 +28,22 @@ public class JsonFileReader {
         return null;
     }
 
+    public static JsonArray GetOps(String jsonPath) {
+        Gson gson = new Gson();
+
+        try (FileReader reader = new FileReader(jsonPath)) {
+            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+            // use jsonObject to access the data
+            JsonObject msg = jsonObject.getAsJsonObject("msg");
+
+            return msg.getAsJsonArray("op");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static String[] GetConcepts(String jsonPath) {
         Gson gson = new Gson();
 
