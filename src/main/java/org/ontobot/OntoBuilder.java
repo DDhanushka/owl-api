@@ -14,7 +14,11 @@ import org.semanticweb.owlapi.vocab.OWL2Datatype;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Set;
 
 public class OntoBuilder {
     private OWLOntologyManager manager;
@@ -34,7 +38,7 @@ public class OntoBuilder {
         this.ontology = this.manager.createOntology(this.ontologyIRI);
     }
 
-    public void build(String[] concepts, JsonArray taxonomies, JsonArray... ops){
+    public void build(String[] concepts, JsonArray taxonomies, JsonArray... ops) {
         try {
             // Define concepts
             for (String concept : concepts) {
@@ -46,14 +50,14 @@ public class OntoBuilder {
             }
 
             // Define Taxonomies with Data properties
-            for (JsonElement taxonomy: taxonomies) {
+            for (JsonElement taxonomy : taxonomies) {
                 JsonObject classObject = taxonomy.getAsJsonObject();
                 String className = classObject.get("class_name").getAsString(); // superClass
                 JsonArray attributes = classObject.get("attributes").getAsJsonArray();
                 JsonArray disjointConcepts = classObject.get("disjoint").getAsJsonArray();
 
                 // set superclass data properties
-                if (!addedConcepts.contains(className)){
+                if (!addedConcepts.contains(className)) {
                     for (JsonElement attr : attributes) {
                         JsonObject attrObj = attr.getAsJsonObject();
                         String name = attrObj.get("name").getAsString();
@@ -67,10 +71,9 @@ public class OntoBuilder {
                 }
 
 
-
-                if (classObject.has("sub_classes")){
+                if (classObject.has("sub_classes")) {
                     JsonArray subClasses = classObject.get("sub_classes").getAsJsonArray();
-                    for (JsonElement subClass: subClasses) {
+                    for (JsonElement subClass : subClasses) {
                         JsonObject subClassObject = subClass.getAsJsonObject();
                         String subClassName = subClassObject.get("class_name").getAsString(); // subClass
                         JsonArray subAttributes = subClassObject.get("attributes").getAsJsonArray();
@@ -78,7 +81,7 @@ public class OntoBuilder {
                         OWLClass supClazz = this.hashMap.get(className);
                         this.manager.addAxiom(this.ontology, this.dataFactory.getOWLSubClassOfAxiom(subClazz, supClazz));
 
-                        if (!addedConcepts.contains(subClassName)){
+                        if (!addedConcepts.contains(subClassName)) {
                             for (JsonElement attr : subAttributes) {
                                 JsonObject attrObj = attr.getAsJsonObject();
                                 String name = attrObj.get("name").getAsString();
@@ -97,9 +100,9 @@ public class OntoBuilder {
                 }
 
                 // set disjoint properties
-                if (disjointConcepts.size() > 0){
+                if (disjointConcepts.size() > 0) {
                     List<OWLClassExpression> disjointList = new ArrayList<>();
-                    for (JsonElement disjointSet: disjointConcepts) {
+                    for (JsonElement disjointSet : disjointConcepts) {
                         if (disjointSet.isJsonArray()) {
                             JsonArray jsonArray = disjointSet.getAsJsonArray(); // convert JsonElement to JsonArray
 
@@ -110,7 +113,7 @@ public class OntoBuilder {
                                 disjointList.add(this.hashMap.get(stringArray[i]));
                             }
 
-                            if (disjointList.size() > 0){
+                            if (disjointList.size() > 0) {
                                 // create the disjoint classes axiom
                                 OWLDisjointClassesAxiom axiom = this.dataFactory.getOWLDisjointClassesAxiom(disjointList);
                                 // add the axiom to the ontology
@@ -124,7 +127,7 @@ public class OntoBuilder {
             }
 
             // Define Object properties
-            if (ops.length == 0){
+            if (ops.length == 0) {
                 System.out.println("It is empty array");
             }
 
@@ -132,13 +135,13 @@ public class OntoBuilder {
             saveOntology(this.ontology);
             checkConsistency(this.ontology);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.toString());
         }
     }
 
-    private OWL2Datatype getPropertyType(String type){
-        switch (type){
+    private OWL2Datatype getPropertyType(String type) {
+        switch (type) {
             case "integer":
                 return OWL2Datatype.XSD_INT;
 
@@ -162,7 +165,7 @@ public class OntoBuilder {
         }
     }
 
-    private void checkConsistency(OWLOntology fetchedOntology){
+    private void checkConsistency(OWLOntology fetchedOntology) {
         OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
         OWLReasoner reasoner = reasonerFactory.createReasoner(fetchedOntology);
 
@@ -181,8 +184,8 @@ public class OntoBuilder {
         reasoner.dispose();
     }
 
-    private void defineDataProperty(OWLDataProperty owlDataProperty, String className, boolean isFunctional, String type){
-        if (isFunctional){
+    private void defineDataProperty(OWLDataProperty owlDataProperty, String className, boolean isFunctional, String type) {
+        if (isFunctional) {
             OWLFunctionalDataPropertyAxiom axiom = this.dataFactory.getOWLFunctionalDataPropertyAxiom(owlDataProperty);
             this.manager.addAxiom(this.ontology, axiom);
         }
@@ -196,7 +199,23 @@ public class OntoBuilder {
     private void saveOntology(OWLOntology fetchedOntology) throws FileNotFoundException, OWLOntologyStorageException {
         // Save the ontology to a file
         String outputOwlFileName = "OWL-OUT2.owl";
-        File fileOut = new File("C://GitHub/owl-API/owl-api/src/OWLOutput/" + outputOwlFileName);
-        this.manager.saveOntology(fetchedOntology, new FunctionalSyntaxDocumentFormat(), new FileOutputStream(fileOut));
+        File fileOut = new File("src/OWLOutput/" + outputOwlFileName);
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(fileOut);
+            this.manager.saveOntology(fetchedOntology, new FunctionalSyntaxDocumentFormat(), fos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
     }
 }
