@@ -124,8 +124,30 @@ public class OntoBuilder {
             }
 
             // Define Object properties
-            if (ops.length == 0){
-                System.out.println("It is empty array");
+            if (ops.length > 0){
+                for (JsonElement op: ops[0]) {
+                    JsonObject opObject = op.getAsJsonObject();
+                    String propertyName = opObject.get("op_name").getAsString();
+                    String inversePropertyName = opObject.get("op_inverse").getAsString();
+                    String domain = opObject.get("op_domain").getAsString();
+                    String range = opObject.get("op_range").getAsString();
+
+                    OWLObjectProperty property = this.dataFactory.getOWLObjectProperty(IRI.create(this.ontologyIRI + "#" + propertyName.replace(" ", "_")));
+                    OWLClass domainClass = dataFactory.getOWLClass(this.hashMap.get(domain));
+                    OWLClass rangeClass = dataFactory.getOWLClass(this.hashMap.get(range));
+                    manager.addAxiom(this.ontology, dataFactory.getOWLObjectPropertyDomainAxiom(property, domainClass));
+                    manager.addAxiom(this.ontology, dataFactory.getOWLObjectPropertyRangeAxiom(property, rangeClass));
+
+                    if (inversePropertyName.length() > 0) {
+                        OWLObjectProperty inverseProperty = dataFactory.getOWLObjectProperty(IRI.create(this.ontologyIRI + "#" + inversePropertyName.replace(" ", "_")));
+                        manager.addAxiom(this.ontology, dataFactory.getOWLInverseObjectPropertiesAxiom(property, inverseProperty));
+                    }
+                    else {
+                        // Create inverse object properties
+                        OWLObjectInverseOf inverseOfProperty = dataFactory.getOWLObjectInverseOf(property);
+                        manager.addAxiom(this.ontology, dataFactory.getOWLInverseObjectPropertiesAxiom(property,inverseOfProperty));
+                    }
+                }
             }
 
             // Save the ontology to a file and check the consistency
@@ -135,6 +157,10 @@ public class OntoBuilder {
         }catch (Exception e){
             System.out.println(e.toString());
         }
+    }
+
+    public boolean getConsistencyResult(){
+        return this.checkConsistency(this.ontology);
     }
 
     private OWL2Datatype getPropertyType(String type){
@@ -162,7 +188,7 @@ public class OntoBuilder {
         }
     }
 
-    private void checkConsistency(OWLOntology fetchedOntology){
+    private boolean checkConsistency(OWLOntology fetchedOntology){
         OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
         OWLReasoner reasoner = reasonerFactory.createReasoner(fetchedOntology);
 
@@ -179,6 +205,8 @@ public class OntoBuilder {
 
         // dispose the reasoner
         reasoner.dispose();
+
+        return isConsistent;
     }
 
     private void defineDataProperty(OWLDataProperty owlDataProperty, String className, boolean isFunctional, String type){

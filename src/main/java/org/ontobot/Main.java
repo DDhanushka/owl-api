@@ -7,7 +7,9 @@ public class Main {
     public static void main(String[] args) throws OWLOntologyCreationException {
         String filepath = "C://GitHub/owl-API/owl-api/src/main/java/org/ontobot/newresponse.json";
         JsonArray taxonomies = JsonFileReader.GetTaxonomies(filepath);
+        JsonArray ops = JsonFileReader.GetOps(filepath);
         String[] concepts = JsonFileReader.GetConcepts(filepath);
+
 //        if (taxonomies != null)
 //            JsonFileReader.RecPrint(taxonomies);
 
@@ -22,6 +24,7 @@ public class Main {
 //        ontologyBuilder.Build(classNames, relationshipNames, attributeNames, taxonomies);
 
         OntoBuilder ontoBuilder = new OntoBuilder();
-        ontoBuilder.build(concepts, taxonomies);
+        ontoBuilder.build(concepts, taxonomies, ops);
+        System.out.println("The consistency state is : "+ ontoBuilder.getConsistencyResult());
     }
 }
