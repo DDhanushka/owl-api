@@ -216,9 +216,6 @@ public class OntoBuilder {
                 }
             }
 
-            // Save the ontology to a file and check the consistency
-            saveOntology(this.ontology);
-            checkConsistency(this.ontology);
 
         }catch (Exception e){
             System.out.println(e.toString());
@@ -227,6 +224,10 @@ public class OntoBuilder {
 
     public boolean getConsistencyResult(){
         return this.checkConsistency(this.ontology);
+    }
+
+    public void saveGeneratedOntology() throws FileNotFoundException, OWLOntologyStorageException {
+        this.saveOntology(this.ontology);
     }
 
     private OWL2Datatype getPropertyType(String type){
