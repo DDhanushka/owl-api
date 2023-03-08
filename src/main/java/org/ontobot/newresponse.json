@@ -1,41 +1,24 @@
 {
   "code": 201,
   "msg": {
-    "concepts": [
-      "CS Degree",
-      "Lecture",
-      "University",
-      "Degree",
-      "Toxic Student",
-      "Innocent Student",
-      "IS Degree",
-      "Primary School",
-      "Student",
-      "SE Degree",
-      "Organization",
-      "Toxic Female Student",
-      "School",
-      "Toxic Male Student",
-      "Graduate"
-    ],
+    "sessionID": "4961e33b-29d3-47ad-89a2-34d04dfff39babc",
     "taxonomy": [
       {
-        "class_name": "Organization",
         "level": 0,
         "attributes": [
           {
-            "id": "123e4567-e89b-12d3-a456-426614174000",
-            "name": "name",
             "datatype": "string",
+            "functional": true,
+            "id": "123e4567-e89b-12d3-a456-426614174000",
             "restrictions": "not null",
-            "functional": true
+            "name": "name"
           },
           {
-            "id": "619e4567-e89b-12d3-a456-537614174000",
-            "name": "year",
             "datatype": "integer",
+            "functional": false,
+            "id": "619e4567-e89b-12d3-a456-537614174000",
             "restrictions": "non zero",
-            "functional": false
+            "name": "year"
           }
         ],
         "disjoint": [
@@ -44,125 +27,125 @@
             "University"
           ]
         ],
-        "overlap": [],
         "sub_classes": [
           {
-            "class_name": "School",
             "level": 1,
             "attributes": [
               {
-                "id": "123e4567-e89b-12d3-a456-426614174000",
-                "name": "category",
                 "datatype": "string",
+                "functional": true,
+                "id": "123e4567-e89b-12d3-a456-426614174000",
                 "restrictions": "not null",
-                "functional": true
+                "name": "category"
               }
             ],
             "disjoint": [],
+            "class_name": "School",
             "overlap": []
           },
           {
-            "class_name": "University",
             "level": 1,
             "attributes": [],
             "disjoint": [],
+            "class_name": "University",
             "overlap": []
           }
-        ]
+        ],
+        "class_name": "Organization",
+        "overlap": []
       },
       {
-        "class_name": "School",
         "level": 1,
         "attributes": [
           {
-            "id": "123e4567-e89b-12d3-a456-426614174000",
-            "name": "category",
             "datatype": "string",
+            "functional": true,
+            "id": "123e4567-e89b-12d3-a456-426614174000",
             "restrictions": "not null",
-            "functional": true
+            "name": "category"
           }
         ],
         "disjoint": [],
-        "overlap": [],
         "sub_classes": [
           {
-            "class_name": "Primary School",
             "level": 2,
             "attributes": [],
             "disjoint": [],
+            "class_name": "Primary School",
             "overlap": []
           }
-        ]
+        ],
+        "class_name": "School",
+        "overlap": []
       },
       {
-        "class_name": "Student",
         "level": 0,
         "attributes": [
           {
-            "id": "0",
-            "name": "ID",
             "datatype": "integer",
+            "functional": true,
+            "id": "0",
             "restrictions": "non zero",
-            "functional": true
+            "name": "ID"
           },
           {
-            "id": "1",
-            "name": "Student name",
             "datatype": "string",
+            "functional": true,
+            "id": "1",
             "restrictions": "not null",
-            "functional": true
+            "name": "Student name"
           }
         ],
         "disjoint": [],
-        "overlap": [["Toxic Student", "Innocent Student"]],
         "sub_classes": [
           {
-            "class_name": "Toxic Student",
             "level": 1,
             "attributes": [
               {
-                "id": "123e4567-e89b-12d3-a456-426614174000",
-                "name": "Toxic Level",
                 "datatype": "integer",
+                "functional": true,
+                "id": "123e4567-e89b-12d3-a456-426614174000",
                 "restrictions": "not null",
-                "functional": true
+                "name": "Toxic Level"
               }
             ],
             "disjoint": [
-              [
-                "Toxic Male Student",
-                "Toxic Female Student"
-              ]
+              {
+                "0": "Toxic Male Student",
+                "1": "Toxic Female Student"
+              }
             ],
+            "class_name": "Toxic Student",
             "overlap": []
           },
           {
-            "class_name": "Innocent Student",
             "level": 1,
             "attributes": [
               {
-                "id": "123e4567-e89b-12d3-a456-426614174000",
-                "name": "Innocent Level",
                 "datatype": "integer",
+                "functional": true,
+                "id": "123e4567-e89b-12d3-a456-426614174000",
                 "restrictions": "not null",
-                "functional": true
+                "name": "Innocent Level"
               }
             ],
             "disjoint": [],
+            "class_name": "Innocent Student",
             "overlap": []
           }
-        ]
+        ],
+        "class_name": "Student",
+        "overlap": []
       },
       {
-        "class_name": "Toxic Student",
         "level": 1,
         "attributes": [
           {
-            "id": "123e4567-e89b-12d3-a456-426614174000",
-            "name": "Toxic Level",
             "datatype": "integer",
+            "functional": true,
+            "id": "123e4567-e89b-12d3-a456-426614174000",
             "restrictions": "not null",
-            "functional": true
+            "name": "Toxic Level"
           }
         ],
         "disjoint": [
@@ -171,63 +154,63 @@
             "Toxic Female Student"
           ]
         ],
-        "overlap": [],
         "sub_classes": [
           {
+            "level": 2,
+            "attributes": [],
+            "disjoint": [],
             "class_name": "Toxic Female Student",
-            "level": 2,
-            "attributes": [],
-            "disjoint": [],
             "overlap": []
           },
           {
+            "level": 2,
+            "attributes": [],
+            "disjoint": [],
             "class_name": "Toxic Male Student",
-            "level": 2,
-            "attributes": [],
-            "disjoint": [],
             "overlap": []
-          }
-        ]
-      },
-      {
-        "class_name": "Lecture",
-        "level": 0,
-        "attributes": [
-          {
-            "id": "0",
-            "name": "ID",
-            "datatype": "integer",
-            "restrictions": "non zero",
-            "functional": true
-          },
-          {
-            "id": "1",
-            "name": "Lecture name",
-            "datatype": "string",
-            "restrictions": "not null",
-            "functional": true
           }
         ],
-        "disjoint": [],
+        "class_name": "Toxic Student",
         "overlap": []
       },
       {
-        "class_name": "Degree",
         "level": 0,
         "attributes": [
           {
-            "id": "0",
-            "name": "ID",
             "datatype": "integer",
+            "functional": true,
+            "id": "0",
             "restrictions": "non zero",
-            "functional": true
+            "name": "ID"
           },
           {
-            "id": "1",
-            "name": "Degree name",
             "datatype": "string",
+            "functional": true,
+            "id": "1",
             "restrictions": "not null",
-            "functional": true
+            "name": "Lecture name"
+          }
+        ],
+        "disjoint": [],
+        "class_name": "Lecture",
+        "overlap": []
+      },
+      {
+        "level": 0,
+        "attributes": [
+          {
+            "datatype": "integer",
+            "functional": true,
+            "id": "0",
+            "restrictions": "non zero",
+            "name": "ID"
+          },
+          {
+            "datatype": "string",
+            "functional": true,
+            "id": "1",
+            "restrictions": "not null",
+            "name": "Degree name"
           }
         ],
         "disjoint": [
@@ -237,31 +220,49 @@
             "CS Degree"
           ]
         ],
-        "overlap": [],
         "sub_classes": [
           {
+            "level": 1,
+            "attributes": [],
+            "disjoint": [],
             "class_name": "CS Degree",
-            "level": 1,
-            "attributes": [],
-            "disjoint": [],
             "overlap": []
           },
           {
+            "level": 1,
+            "attributes": [],
+            "disjoint": [],
             "class_name": "IS Degree",
-            "level": 1,
-            "attributes": [],
-            "disjoint": [],
             "overlap": []
           },
           {
-            "class_name": "SE Degree",
             "level": 1,
             "attributes": [],
             "disjoint": [],
+            "class_name": "SE Degree",
             "overlap": []
           }
-        ]
+        ],
+        "class_name": "Degree",
+        "overlap": []
       }
+    ],
+    "concepts": [
+      "Organization",
+      "School",
+      "Degree",
+      "IS Degree",
+      "SE Degree",
+      "Student",
+      "Toxic Student",
+      "Toxic Male Student",
+      "Toxic Female Student",
+      "University",
+      "Primary School",
+      "Innocent Student",
+      "Lecture",
+      "CS Degree",
+      "Graduate"
     ],
     "op": [
       {
@@ -272,6 +273,10 @@
         "op_domain": "Student",
         "op_range": "School",
         "level": 0,
+        "quantifier": {
+          "some": false,
+          "only": false
+        },
         "constraints": {
           "functional": true,
           "inverseFunctional": false,
@@ -290,6 +295,10 @@
         "op_domain": "Lecture",
         "op_range": "University",
         "level": 0,
+        "quantifier": {
+          "some": false,
+          "only": false
+        },
         "constraints": {
           "functional": true,
           "inverseFunctional": false,
@@ -316,6 +325,10 @@
           "asymmetric": false,
           "reflexive": false,
           "irreflexive": false
+        },
+        "quantifier": {
+          "some": false,
+          "only": false
         }
       },
       {
@@ -334,6 +347,10 @@
           "asymmetric": false,
           "reflexive": false,
           "irreflexive": false
+        },
+        "quantifier": {
+          "some": false,
+          "only": false
         }
       },
       {
@@ -352,6 +369,10 @@
           "asymmetric": false,
           "reflexive": false,
           "irreflexive": false
+        },
+        "quantifier": {
+          "some": false,
+          "only": false
         }
       },
       {
@@ -362,6 +383,10 @@
         "op_domain": "Toxic Male Student",
         "op_range": "Toxic Female Student",
         "level": 0,
+        "quantifier": {
+          "some": false,
+          "only": false
+        },
         "constraints": {
           "functional": true,
           "inverseFunctional": false,
@@ -380,6 +405,10 @@
         "op_domain": "Toxic Student",
         "op_range": "Innocent Student",
         "level": 0,
+        "quantifier": {
+          "some": false,
+          "only": false
+        },
         "constraints": {
           "functional": false,
           "inverseFunctional": false,
@@ -398,6 +427,10 @@
         "op_domain": "University",
         "op_range": "School",
         "level": 0,
+        "quantifier": {
+          "some": false,
+          "only": false
+        },
         "constraints": {
           "functional": false,
           "inverseFunctional": false,
@@ -416,6 +449,10 @@
         "op_domain": "Student",
         "op_range": "Degree",
         "level": 0,
+        "quantifier": {
+          "some": false,
+          "only": false
+        },
         "constraints": {
           "functional": false,
           "inverseFunctional": false,
@@ -442,6 +479,10 @@
           "asymmetric": false,
           "reflexive": false,
           "irreflexive": false
+        },
+        "quantifier": {
+          "some": false,
+          "only": false
         }
       },
       {
@@ -460,10 +501,13 @@
           "asymmetric": false,
           "reflexive": false,
           "irreflexive": false
+        },
+        "quantifier": {
+          "some": false,
+          "only": false
         }
       }
     ]
   },
-
   "type": "success"
 }

@@ -24,20 +24,20 @@ public class Main {
         OntoBuilder ontoBuilder = new OntoBuilder();
 
         // generate taxonomy stage ontology
-        ontoBuilder.build(concepts, taxonomies);
-        ontoBuilder.saveGeneratedOntology();
+        //ontoBuilder.build(concepts, taxonomies);
+        //ontoBuilder.saveGeneratedOntology();
 
-        // check consistency of taxonomy level stage
-        ontoBuilder.build(concepts, taxonomies);
-        ontoBuilder.getConsistencyResult();
-
-        // check consistency of simple op level stage and advanced level stage
+//        // check consistency of taxonomy level stage
+//        ontoBuilder.build(concepts, taxonomies);
+//        ontoBuilder.getConsistencyResult();
+//
+//        // check consistency of simple op level stage and advanced level stage
         ontoBuilder.build(concepts, taxonomies, ops);
-        ontoBuilder.getConsistencyResult();
-
-        // generate final stage ontology
-        ontoBuilder.build(concepts, taxonomies, ops);
-        ontoBuilder.saveGeneratedOntology();
+//        ontoBuilder.getConsistencyResult();
+//
+//        // generate final stage ontology
+//        ontoBuilder.build(concepts, taxonomies, ops);
+//        ontoBuilder.saveGeneratedOntology();
 
     }
 }
