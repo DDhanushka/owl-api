@@ -180,12 +180,18 @@ public class OntoBuilder {
                     String domain = opObject.get("op_domain").getAsString();
                     String range = opObject.get("op_range").getAsString();
                     JsonObject quantifier = opObject.get("quantifier").getAsJsonObject();
+                    JsonObject constraints = opObject.get("constraints").getAsJsonObject();
 
                     OWLObjectProperty property = this.dataFactory.getOWLObjectProperty(IRI.create(this.ontologyIRI + "#" + propertyName.replace(" ", "_")));
                     OWLClass domainClass = this.dataFactory.getOWLClass(this.hashMap.get(domain));
                     OWLClass rangeClass = this.dataFactory.getOWLClass(this.hashMap.get(range));
-                    manager.addAxiom(this.ontology, dataFactory.getOWLObjectPropertyDomainAxiom(property, domainClass));
-                    manager.addAxiom(this.ontology, dataFactory.getOWLObjectPropertyRangeAxiom(property, rangeClass));
+
+                    manager.addAxiom(this.ontology, this.dataFactory.getOWLDeclarationAxiom(property));
+                    manager.addAxiom(this.ontology, this.dataFactory.getOWLObjectPropertyDomainAxiom(property, domainClass));
+                    manager.addAxiom(this.ontology, this.dataFactory.getOWLObjectPropertyRangeAxiom(property, rangeClass));
+
+                    // define property characteristics such as symmetric and etc
+                    this.definePropertyCharacteristics(constraints, property);
 
                     // define quantifiers for the defined property
                     // create an OWLClassExpression object for OP some/only Range concept
@@ -271,6 +277,30 @@ public class OntoBuilder {
 
             default:
                 return OWL2Datatype.XSD_ANY_URI;
+        }
+    }
+
+    private void definePropertyCharacteristics(JsonObject characteristics, OWLObjectProperty property){
+        if (characteristics.get("functional").getAsBoolean()){
+            manager.addAxiom(this.ontology, this.dataFactory.getOWLFunctionalObjectPropertyAxiom(property));
+        }
+        if (characteristics.get("inverseFunctional").getAsBoolean()){
+            manager.addAxiom(this.ontology, this.dataFactory.getOWLInverseFunctionalObjectPropertyAxiom(property));
+        }
+        if (characteristics.get("transitive").getAsBoolean()){
+            manager.addAxiom(this.ontology, this.dataFactory.getOWLTransitiveObjectPropertyAxiom(property));
+        }
+        if(characteristics.get("symmetric").getAsBoolean()){
+            manager.addAxiom(this.ontology, this.dataFactory.getOWLSymmetricObjectPropertyAxiom(property));
+        }
+        if(characteristics.get("asymmetric").getAsBoolean()){
+            manager.addAxiom(this.ontology, this.dataFactory.getOWLAsymmetricObjectPropertyAxiom(property));
+        }
+        if(characteristics.get("reflexive").getAsBoolean()){
+            manager.addAxiom(this.ontology, this.dataFactory.getOWLReflexiveObjectPropertyAxiom(property));
+        }
+        if (characteristics.get("irreflexive").getAsBoolean()){
+            manager.addAxiom(this.ontology, this.dataFactory.getOWLIrreflexiveObjectPropertyAxiom(property));
         }
     }
 
