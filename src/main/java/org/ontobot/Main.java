@@ -12,6 +12,7 @@ public class Main {
         JsonArray taxonomies = JsonFileReader.GetTaxonomies(filepath);
         JsonArray ops = JsonFileReader.GetOps(filepath);
         String[] concepts = JsonFileReader.GetConcepts(filepath);
+        String sessionID = JsonFileReader.getSessionID(filepath);
 
 
         // Define the set of classes, relationships, and attributes to add
@@ -32,12 +33,12 @@ public class Main {
 //        ontoBuilder.getConsistencyResult();
 //
 //        // check consistency of simple op level stage and advanced level stage
-        ontoBuilder.build(concepts, taxonomies, ops);
+//        ontoBuilder.build(concepts, taxonomies, ops);
 //        ontoBuilder.getConsistencyResult();
 //
-//        // generate final stage ontology
-//        ontoBuilder.build(concepts, taxonomies, ops);
-//        ontoBuilder.saveGeneratedOntology();
-
+        // generate final stage ontology
+        ontoBuilder.build(concepts, taxonomies, ops);
+        ontoBuilder.saveGeneratedOntology(sessionID);
+        ontoBuilder.getConsistencyResult();
     }
 }

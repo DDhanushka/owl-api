@@ -66,6 +66,22 @@ public class JsonFileReader {
         return null;
     }
 
+    public static String getSessionID(String jsonPath) {
+        Gson gson = new Gson();
+
+        try (FileReader reader = new FileReader(jsonPath)){
+            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+            // use jsonObject to access the data
+            JsonObject msg = jsonObject.getAsJsonObject("msg");
+            return msg.get("sessionID").toString();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public static void RecPrint(JsonArray taxonomies) {
         for (JsonElement taxo : taxonomies) {
             JsonObject classObject = taxo.getAsJsonObject();
