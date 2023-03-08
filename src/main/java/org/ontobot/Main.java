@@ -15,6 +15,7 @@ public class Main {
         JsonArray taxonomies = JsonFileReader.GetTaxonomies(filepath);
         JsonArray ops = JsonFileReader.GetOps(filepath);
         String[] concepts = JsonFileReader.GetConcepts(filepath);
+        String sessionID = JsonFileReader.getSessionID(filepath);
 
         assert taxonomies != null;
 
@@ -29,6 +30,7 @@ public class Main {
 //        ontoBuilder.getConsistencyResult();
 //
 //        // check consistency of simple op level stage and advanced level stage
+
         ontoBuilder.build(concepts, taxonomies, ops);
         ontoBuilder.getConsistencyResult();
 //
@@ -54,7 +56,6 @@ public class Main {
 
             return ontoBuilder.getConsistencyResult();
         });
-
 
     }
 }
