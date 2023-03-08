@@ -8,16 +8,10 @@ import java.io.FileNotFoundException;
 
 public class Main {
     public static void main(String[] args) throws OWLOntologyCreationException, FileNotFoundException, OWLOntologyStorageException {
-        String filepath = "C://GitHub/owl-API/owl-api/src/main/java/org/ontobot/newresponse.json";
+        String filepath = "src/main/java/org/ontobot/newresponse.json";
         JsonArray taxonomies = JsonFileReader.GetTaxonomies(filepath);
         JsonArray ops = JsonFileReader.GetOps(filepath);
         String[] concepts = JsonFileReader.GetConcepts(filepath);
-
-
-        // Define the set of classes, relationships, and attributes to add
-        String[] classNames = {"Person", "Employee", "Student"};
-        String[] relationshipNames = {"hasSupervisor", "hasStudentAdvisor"};
-        String[] attributeNames = {"hasAge", "hasSalary"};
 
         assert taxonomies != null;
 
@@ -33,11 +27,11 @@ public class Main {
 //
 //        // check consistency of simple op level stage and advanced level stage
         ontoBuilder.build(concepts, taxonomies, ops);
-//        ontoBuilder.getConsistencyResult();
+        ontoBuilder.getConsistencyResult();
 //
 //        // generate final stage ontology
 //        ontoBuilder.build(concepts, taxonomies, ops);
-//        ontoBuilder.saveGeneratedOntology();
+        ontoBuilder.saveGeneratedOntology();
 
     }
 }

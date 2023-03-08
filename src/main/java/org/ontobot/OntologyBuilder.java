@@ -109,7 +109,7 @@ public class OntologyBuilder {
 
             // Save the ontology to a file
             String outputOwlFileName = "OWL-OUT.owl";
-            File fileOut = new File("C://GitHub/owl-API/owl-api/src/OWLOutput/" + outputOwlFileName);
+            File fileOut = new File("src/OWLOutput/" + outputOwlFileName);
             manager.saveOntology(ontology, new FunctionalSyntaxDocumentFormat(), new FileOutputStream(fileOut));
 
         } catch (OWLOntologyStorageException e) {
