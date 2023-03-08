@@ -182,8 +182,8 @@ public class OntoBuilder {
                     JsonObject quantifier = opObject.get("quantifier").getAsJsonObject();
 
                     OWLObjectProperty property = this.dataFactory.getOWLObjectProperty(IRI.create(this.ontologyIRI + "#" + propertyName.replace(" ", "_")));
-                    OWLClass domainClass = dataFactory.getOWLClass(this.hashMap.get(domain));
-                    OWLClass rangeClass = dataFactory.getOWLClass(this.hashMap.get(range));
+                    OWLClass domainClass = this.dataFactory.getOWLClass(this.hashMap.get(domain));
+                    OWLClass rangeClass = this.dataFactory.getOWLClass(this.hashMap.get(range));
                     manager.addAxiom(this.ontology, dataFactory.getOWLObjectPropertyDomainAxiom(property, domainClass));
                     manager.addAxiom(this.ontology, dataFactory.getOWLObjectPropertyRangeAxiom(property, rangeClass));
 
@@ -245,8 +245,8 @@ public class OntoBuilder {
         return this.checkConsistency(this.ontology);
     }
 
-    public void saveGeneratedOntology() throws FileNotFoundException, OWLOntologyStorageException {
-        this.saveOntology(this.ontology);
+    public void saveGeneratedOntology(String sessionID) throws FileNotFoundException, OWLOntologyStorageException {
+        this.saveOntology(this.ontology, sessionID);
     }
 
     private OWL2Datatype getPropertyType(String type){
@@ -317,9 +317,9 @@ public class OntoBuilder {
         this.manager.addAxiom(this.ontology, rangeProperty);
     }
 
-    private void saveOntology(OWLOntology fetchedOntology) throws FileNotFoundException, OWLOntologyStorageException {
+    private void saveOntology(OWLOntology fetchedOntology, String session) throws FileNotFoundException, OWLOntologyStorageException {
         // Save the ontology to a file
-        String outputOwlFileName = "OWL-OUT.owl";
+        String outputOwlFileName = "OWL-OUT-"+session.substring(1, session.length() - 1)+".owl";
         File fileOut = new File("C://GitHub/owl-API/owl-api/src/OWLOutput/" + outputOwlFileName);
         this.manager.saveOntology(fetchedOntology, new FunctionalSyntaxDocumentFormat(), new FileOutputStream(fileOut));
     }

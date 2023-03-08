@@ -428,7 +428,7 @@
         "op_range": "School",
         "level": 0,
         "quantifier": {
-          "some": false,
+          "some": true,
           "only": false
         },
         "constraints": {
@@ -450,7 +450,7 @@
         "op_range": "Degree",
         "level": 0,
         "quantifier": {
-          "some": false,
+          "some": true,
           "only": false
         },
         "constraints": {
@@ -481,7 +481,7 @@
           "irreflexive": false
         },
         "quantifier": {
-          "some": false,
+          "some": true,
           "only": false
         }
       },
