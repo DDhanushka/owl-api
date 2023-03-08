@@ -60,9 +60,7 @@ public class OntoBuilder {
                 if (!addedConcepts.contains(className)){
                     // define comment
                     // Create the RDFS comment annotation
-                    OWLAnnotation commentAnnotation = this.dataFactory.getOWLAnnotation(
-                            this.dataFactory.getRDFSComment(),
-                            this.dataFactory.getOWLLiteral("This is a comment about MyClass"));
+                    this.defineConceptComments(className, level);
 
 
                     for (JsonElement attr : attributes) {
@@ -92,6 +90,9 @@ public class OntoBuilder {
 
                         if (!addedConcepts.contains(subClassName)){
                             // define comment
+                            // Create the RDFS comment annotation
+                            this.defineConceptComments(subClassName, subLevel);
+
 
                             for (JsonElement attr : subAttributes) {
                                 JsonObject attrObj = attr.getAsJsonObject();
@@ -178,12 +179,30 @@ public class OntoBuilder {
                     String comment = opObject.get("op_equal").getAsString();
                     String domain = opObject.get("op_domain").getAsString();
                     String range = opObject.get("op_range").getAsString();
+                    JsonObject quantifier = opObject.get("quantifier").getAsJsonObject();
 
                     OWLObjectProperty property = this.dataFactory.getOWLObjectProperty(IRI.create(this.ontologyIRI + "#" + propertyName.replace(" ", "_")));
                     OWLClass domainClass = dataFactory.getOWLClass(this.hashMap.get(domain));
                     OWLClass rangeClass = dataFactory.getOWLClass(this.hashMap.get(range));
                     manager.addAxiom(this.ontology, dataFactory.getOWLObjectPropertyDomainAxiom(property, domainClass));
                     manager.addAxiom(this.ontology, dataFactory.getOWLObjectPropertyRangeAxiom(property, rangeClass));
+
+                    // define quantifiers for the defined property
+                    // create an OWLClassExpression object for OP some/only Range concept
+                    if (quantifier.get("some").getAsBoolean()){
+                        OWLClassExpression someExpression = this.dataFactory.getOWLObjectSomeValuesFrom(property, rangeClass);
+                        // create an OWLAxiom object for domain subclassOf OP some domain
+                        OWLAxiom axiom = this.dataFactory.getOWLSubClassOfAxiom(this.hashMap.get(domain), someExpression);
+                        // add the axiom to the ontology
+                        this.manager.applyChanges(new AddAxiom(this.ontology, axiom));
+                    }
+                    if (quantifier.get("only").getAsBoolean()){
+                        OWLClassExpression onlyExpression = this.dataFactory.getOWLObjectAllValuesFrom(property, rangeClass);
+                        OWLAxiom axiom = this.dataFactory.getOWLSubClassOfAxiom(this.hashMap.get(domain), onlyExpression);
+                        // add the axiom to the ontology
+                        this.manager.applyChanges(new AddAxiom(this.ontology, axiom));
+                    }
+
 
                     // add comments
                     if (comment.length() > 0){
@@ -216,9 +235,6 @@ public class OntoBuilder {
                 }
             }
 
-            // Save the ontology to a file and check the consistency
-            saveOntology(this.ontology);
-            checkConsistency(this.ontology);
 
         }catch (Exception e){
             System.out.println(e.toString());
@@ -227,6 +243,10 @@ public class OntoBuilder {
 
     public boolean getConsistencyResult(){
         return this.checkConsistency(this.ontology);
+    }
+
+    public void saveGeneratedOntology() throws FileNotFoundException, OWLOntologyStorageException {
+        this.saveOntology(this.ontology);
     }
 
     private OWL2Datatype getPropertyType(String type){
@@ -253,6 +273,16 @@ public class OntoBuilder {
                 return OWL2Datatype.XSD_ANY_URI;
         }
     }
+
+    private void defineConceptComments(String className, String level){
+        OWLAnnotation commentAnnotation = this.dataFactory.getOWLAnnotation(
+                this.dataFactory.getRDFSComment(),
+                this.dataFactory.getOWLLiteral("The Level : "+ level));
+
+        OWLAxiom commentAxiom = this.dataFactory.getOWLAnnotationAssertionAxiom(this.hashMap.get(className).getIRI(), commentAnnotation);
+        this.manager.applyChange(new AddAxiom(this.ontology, commentAxiom));
+    }
+
 
     private boolean checkConsistency(OWLOntology fetchedOntology){
         OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
