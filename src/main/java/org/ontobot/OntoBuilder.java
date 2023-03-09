@@ -251,8 +251,8 @@ public class OntoBuilder {
         return this.checkConsistency(this.ontology);
     }
 
-    public void saveGeneratedOntology(String sessionID) throws FileNotFoundException, OWLOntologyStorageException {
-        this.saveOntology(this.ontology, sessionID);
+    public File saveGeneratedOntology(String sessionID) throws FileNotFoundException, OWLOntologyStorageException {
+        return this.saveOntology(this.ontology, sessionID);
     }
 
     private OWL2Datatype getPropertyType(String type){
@@ -347,10 +347,11 @@ public class OntoBuilder {
         this.manager.addAxiom(this.ontology, rangeProperty);
     }
 
-    private void saveOntology(OWLOntology fetchedOntology, String session) throws FileNotFoundException, OWLOntologyStorageException {
+    private File saveOntology(OWLOntology fetchedOntology, String session) throws FileNotFoundException, OWLOntologyStorageException {
         // Save the ontology to a file
         String outputOwlFileName = "OWL-OUT-"+session.substring(1, session.length() - 1)+".owl";
         File fileOut = new File("src/OWLOutput/" + outputOwlFileName);
         this.manager.saveOntology(fetchedOntology, new FunctionalSyntaxDocumentFormat(), new FileOutputStream(fileOut));
+        return fileOut;
     }
 }

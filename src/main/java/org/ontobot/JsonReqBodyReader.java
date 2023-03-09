@@ -33,5 +33,9 @@ public class JsonReqBodyReader {
         return msg.getAsJsonArray("op");
     }
 
+    public String getSessionID() {
+        return msg.get("sessionID").getAsString();
+
+    }
 
 }
