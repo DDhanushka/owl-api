@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a410bd3e-90cd-476a-8b51-ab98cc087899" name="Changes" comment="Remove spaces from class names">
+    <list default="true" id="a410bd3e-90cd-476a-8b51-ab98cc087899" name="Changes" comment="Remove unnecessary files and make absolute paths relative">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/JsonReqBodyReader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/Util.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ontobot/OntoBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ontobot/OntoBuilder.java" afterDir="false" />
     </list>
@@ -26,7 +28,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -38,6 +40,9 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/.gitignore" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -116,8 +121,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Reader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.ontobot.Reader" />
+    <configuration name="TestFile" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.ontobot.TestFile" />
       <module name="owl-api" />
       <extension name="coverage">
         <pattern>
@@ -132,10 +137,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.TestFile" />
         <item itemvalue="Application.OntologyBuilder" />
         <item itemvalue="Application.Ex5" />
         <item itemvalue="Application.JsonFileReader" />
-        <item itemvalue="Application.Reader" />
       </list>
     </recent_temporary>
   </component>
@@ -204,7 +209,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677472113310</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Remove unnecessary files and make absolute paths relative">
+      <created>1678260237276</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1678260237276</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -228,6 +240,7 @@
     <MESSAGE value="commit with null error" />
     <MESSAGE value="fix null error" />
     <MESSAGE value="Remove spaces from class names" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove spaces from class names" />
+    <MESSAGE value="Remove unnecessary files and make absolute paths relative" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove unnecessary files and make absolute paths relative" />
   </component>
 </project>
