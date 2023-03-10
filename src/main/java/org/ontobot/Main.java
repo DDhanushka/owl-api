@@ -130,9 +130,10 @@ public class Main {
             JsonArray taxonomies = jsonReqBodyReader.GetTaxonomies();
             String[] concepts = jsonReqBodyReader.GetConcepts();
             String sessionID = jsonReqBodyReader.getSessionID();
+            JsonArray ops = jsonReqBodyReader.GetObjectProps().getAsJsonArray();
 
             OntoBuilder ontoBuilder = new OntoBuilder();
-            ontoBuilder.build(concepts, taxonomies);
+            ontoBuilder.build(concepts, taxonomies, ops);
 
             // Get the path to the XML file on disk
             String filePath = String.valueOf(ontoBuilder.saveGeneratedOntology(sessionID));
