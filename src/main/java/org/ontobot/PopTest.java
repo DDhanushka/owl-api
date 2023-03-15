@@ -34,13 +34,17 @@ public class PopTest {
         // Load the ontology
 //        OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
 //        OWLOntology ontology = manager.loadOntologyFromOntologyDocument(new File("src/OWLOutput/OWL-OUT-961e33b-29d3-47ad-89a2-34d04dfff39bab.owl"));
-
-//        OntoBuilder ontoBuilder = new OntoBuilder();
-//        ontoBuilder.build(concepts, taxonomies, ops);
-//        ontoBuilder.getConsistencyResult();
+        OntoBuilder ontoBuilder = new OntoBuilder();
+        ontoBuilder.build(concepts, taxonomies, ops);
+        ontoBuilder.getConsistencyResult();
 //        ontoBuilder.saveGeneratedOntology(sessionID);
 
+        OWLOntology ontology = ontoBuilder.getOntology();
+        IRI ontologyIRI = ontoBuilder.getIRI();
+
+        System.out.println(ontologyIRI);
+
         Populator populator = new Populator();
-        populator.popFunc();
+        populator.popFunc(ontologyIRI);
     }
 }
