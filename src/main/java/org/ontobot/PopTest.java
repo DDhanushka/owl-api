@@ -45,6 +45,6 @@ public class PopTest {
         System.out.println(ontologyIRI);
 
         Populator populator = new Populator();
-        populator.popFunc(ontologyIRI);
+        populator.popFunc(ontologyIRI, ontology);
     }
 }
