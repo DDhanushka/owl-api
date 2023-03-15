@@ -1,17 +1,28 @@
 package org.ontobot;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.reasoner.Node;
+import org.semanticweb.owlapi.reasoner.NodeSet;
+import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
+import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
 
 import java.io.File;
-import java.util.Set;
+import java.util.*;
 
 import java.io.FileNotFoundException;
 
 public class PopTest {
+
+//    private Hashtable<String, OWLClass> cache = new Hashtable<>();
+
+//    private Set<Map.Entry<String, JsonElement>> cache;
+
     public static void main(String[] args) throws FileNotFoundException, OWLOntologyStorageException, OWLOntologyCreationException {
         String filepath = "src/main/java/org/ontobot/newresponse.json";
         JsonArray taxonomies = JsonFileReader.GetTaxonomies(filepath);
@@ -20,35 +31,16 @@ public class PopTest {
         String sessionID = JsonFileReader.getSessionID(filepath);
 
         assert taxonomies != null;
+        // Load the ontology
+//        OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+//        OWLOntology ontology = manager.loadOntologyFromOntologyDocument(new File("src/OWLOutput/OWL-OUT-961e33b-29d3-47ad-89a2-34d04dfff39bab.owl"));
 
 //        OntoBuilder ontoBuilder = new OntoBuilder();
 //        ontoBuilder.build(concepts, taxonomies, ops);
 //        ontoBuilder.getConsistencyResult();
 //        ontoBuilder.saveGeneratedOntology(sessionID);
 
-        pop();
+        Populator populator = new Populator();
+        populator.popFunc();
     }
-
-
-    public static void pop() throws OWLOntologyCreationException {
-        // Load the ontology
-        OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-        OWLOntology ontology = manager.loadOntologyFromOntologyDocument(new File("src/OWLOutput/OWL-OUT-961e33b-29d3-47ad-89a2-34d04dfff39bab.owl"));
-
-        // Get the list of classes in the ontology
-        Set<OWLClass> classes = ontology.getClassesInSignature();
-
-        // For each class, get the list of its data properties
-        for (OWLClass cls : classes) {
-            Set<OWLDataProperty> dataProperties = cls.getDataPropertiesInSignature();
-
-            // Print the class name and its data properties
-            System.out.println("Class: " + cls.getIRI().getShortForm());
-            for (OWLDataProperty prop : dataProperties) {
-                System.out.println("\tData Property: " + prop.getIRI().getShortForm());
-            }
-        }
-    }
-
-
 }
