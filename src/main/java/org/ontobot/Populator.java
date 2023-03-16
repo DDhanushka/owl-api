@@ -64,19 +64,20 @@ public class Populator {
 //                        System.out.println("Other prop" + individualsProperty.getKey() + " -> " + individualsProperty.getValue());
                         //              Assign data properties to the individual
                         dataProp = dataFactory.getOWLDataProperty(IRI.create(ontologyIRI + "#has" + individualsProperty.getKey().replace(" ", "_")));
-                        dataPropLiteral = dataFactory.getOWLLiteral(String.valueOf(individualsProperty.getValue()));
+                        dataPropLiteral = dataFactory.getOWLLiteral(individualsProperty.getValue().getAsString().replace(" ", "_"));
                         assert individual != null;
                         dataPropAssertion = dataFactory.getOWLDataPropertyAssertionAxiom(dataProp, individual, dataPropLiteral);
+
+                        //// Add the individual and data property assertions to the ontology
+                        assert individual != null;
+                        manager.addAxiom(ontology, dataFactory.getOWLDeclarationAxiom(individual));
+                        manager.addAxiom(ontology, dataFactory.getOWLClassAssertionAxiom(owlClass, individual));
+                        assert dataPropAssertion != null;
+                        manager.addAxiom(ontology, dataPropAssertion);
 //
                     }
                 }
 
-//// Add the individual and data property assertions to the ontology
-                assert individual != null;
-                manager.addAxiom(ontology, dataFactory.getOWLDeclarationAxiom(individual));
-                manager.addAxiom(ontology, dataFactory.getOWLClassAssertionAxiom(owlClass, individual));
-                assert dataPropAssertion != null;
-                manager.addAxiom(ontology, dataPropAssertion);
 
             }
             System.out.println("------");
