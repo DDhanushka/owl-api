@@ -58,13 +58,13 @@ public class Populator {
                     if (Objects.equals(individualsProperty.getKey(), "# Object Name")) {
 //                        System.out.println("Instance name: " + individualsProperty.getValue());
                         //              Create an individual for the Student class
-                        individual = dataFactory.getOWLNamedIndividual(ontologyIRI + instanceName);
+                        individual = dataFactory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#" + individualsProperty.getValue().getAsString().replace(" ", "_")));
 
                     } else {
 //                        System.out.println("Other prop" + individualsProperty.getKey() + " -> " + individualsProperty.getValue());
                         //              Assign data properties to the individual
-                        dataProp = dataFactory.getOWLDataProperty(IRI.create(ontologyIRI + "#has" + individualsProperty.getKey()));
-                         dataPropLiteral = dataFactory.getOWLLiteral(String.valueOf(individualsProperty.getValue()));
+                        dataProp = dataFactory.getOWLDataProperty(IRI.create(ontologyIRI + "#has" + individualsProperty.getKey().replace(" ", "_")));
+                        dataPropLiteral = dataFactory.getOWLLiteral(String.valueOf(individualsProperty.getValue()));
                         assert individual != null;
                         dataPropAssertion = dataFactory.getOWLDataPropertyAssertionAxiom(dataProp, individual, dataPropLiteral);
 //
