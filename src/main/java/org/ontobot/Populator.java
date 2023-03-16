@@ -37,7 +37,7 @@ public class Populator {
         for (Map.Entry<String, JsonElement> entry : Objects.requireNonNull(cache)) {
             String className = entry.getKey();
 
-            OWLClass owlClass = dataFactory.getOWLClass(ontologyIRI + className);
+            OWLClass owlClass = dataFactory.getOWLClass(IRI.create(ontologyIRI + "#" + className));
 
 
             System.out.println(entry.getKey());
