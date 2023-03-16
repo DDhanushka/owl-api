@@ -234,7 +234,8 @@ public class OntoBuilder {
                         manager.addAxiom(this.ontology, dataFactory.getOWLInverseObjectPropertiesAxiom(property, inverseProperty));
                     } else {
                         // Create inverse object properties
-                        OWLObjectInverseOf inverseOfProperty = dataFactory.getOWLObjectInverseOf(property);
+                        OWLObjectProperty inverseOfProperty = dataFactory.getOWLObjectProperty(IRI.create(this.ontologyIRI + "#" + "_inverse_prop"));
+//                        OWLObjectInverseOf inverseOfProperty = dataFactory.getOWLObjectInverseOf(property);
                         manager.addAxiom(this.ontology, dataFactory.getOWLInverseObjectPropertiesAxiom(property, inverseOfProperty));
                     }
                 }
