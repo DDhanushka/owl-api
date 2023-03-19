@@ -12,7 +12,7 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 
 public class Main {
-    public static void NotMain(String[] args) throws OWLOntologyCreationException, FileNotFoundException, OWLOntologyStorageException {
+    public static void runUsingFileRead(String[] args) throws OWLOntologyCreationException, FileNotFoundException, OWLOntologyStorageException {
         String filepath = "src/main/java/org/ontobot/newresponse.json";
         JsonArray taxonomies = JsonFileReader.GetTaxonomies(filepath);
         JsonArray ops = JsonFileReader.GetOps(filepath);
@@ -22,22 +22,8 @@ public class Main {
         assert taxonomies != null;
 
         OntoBuilder ontoBuilder = new OntoBuilder();
-
-        // generate taxonomy stage ontology
-        //ontoBuilder.build(concepts, taxonomies);
-        //ontoBuilder.saveGeneratedOntology();
-
-//        // check consistency of taxonomy level stage
-//        ontoBuilder.build(concepts, taxonomies);
-//        ontoBuilder.getConsistencyResult();
-//
-//        // check consistency of simple op level stage and advanced level stage
-
         ontoBuilder.build(concepts, taxonomies, ops);
         ontoBuilder.getConsistencyResult();
-//
-//        // generate final stage ontology
-//        ontoBuilder.build(concepts, taxonomies, ops);
         ontoBuilder.saveGeneratedOntology(sessionID);
 
     }
