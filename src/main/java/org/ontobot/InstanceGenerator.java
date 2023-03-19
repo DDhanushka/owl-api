@@ -15,7 +15,7 @@ import java.util.Objects;
 import java.util.Set;
 
 
-public class Populator {
+public class InstanceGenerator {
 
     private final OWLDataFactory dataFactory;
     private final OWLOntologyManager manager;
@@ -24,7 +24,7 @@ public class Populator {
 
     OWLOntology ontology;
 
-    public Populator(OWLOntology ontology, IRI ontologyIRI) {
+    public InstanceGenerator(OWLOntology ontology, IRI ontologyIRI) {
         // Create the OWLOntologyManager and the OWLDataFactory
         this.manager = OWLManager.createOWLOntologyManager();
         this.dataFactory = manager.getOWLDataFactory();
@@ -32,13 +32,12 @@ public class Populator {
         this.ontologyIRI = ontologyIRI;
     }
 
-    public void instanceMaker(Set<Map.Entry<String, JsonElement>> instanceMsgObjectData) throws FileNotFoundException, OWLOntologyStorageException {
+    public void addInstances(Set<Map.Entry<String, JsonElement>> instanceMsgObjectData) throws FileNotFoundException, OWLOntologyStorageException {
         OWLNamedIndividual individual = null;
         OWLDataPropertyAssertionAxiom dataPropAssertion = null;
         OWLDataProperty dataProp = null;
         OWLLiteral dataPropLiteral = null;
         Set<Map.Entry<String, JsonElement>> objectMembersSet = null;
-
 
         System.out.println("====================== Instance adder ======================");
         for (Map.Entry<String, JsonElement> entry : Objects.requireNonNull(instanceMsgObjectData)) {

@@ -30,7 +30,7 @@ public class PopTest {
         OWLOntology ontology = ontoBuilder.getOntology();
         IRI ontologyIRI = ontoBuilder.getIRI();
 
-        Populator populator = new Populator(ontology, ontologyIRI);
-        populator.instanceMaker(instanceMsgObjectData);
+        InstanceGenerator instanceGenerator = new InstanceGenerator(ontology, ontologyIRI);
+        instanceGenerator.addInstances(instanceMsgObjectData);
     }
 }
