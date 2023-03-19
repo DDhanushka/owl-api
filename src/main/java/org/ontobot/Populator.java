@@ -17,22 +17,31 @@ import java.util.Set;
 
 public class Populator {
 
-    private Set<Map.Entry<String, JsonElement>> cache;
-    private OWLDataFactory dataFactory;
-    private OWLOntologyManager manager;
+    private final OWLDataFactory dataFactory;
+    private final OWLOntologyManager manager;
 
-    public Populator() {
+    IRI ontologyIRI;
+
+    OWLOntology ontology;
+
+    public Populator(OWLOntology ontology, IRI ontologyIRI) {
         // Create the OWLOntologyManager and the OWLDataFactory
         this.manager = OWLManager.createOWLOntologyManager();
         this.dataFactory = manager.getOWLDataFactory();
+        this.ontology = ontology;
+        this.ontologyIRI = ontologyIRI;
     }
 
-    public void instanceMaker(IRI ontologyIRI, OWLOntology ontology, Set<Map.Entry<String, JsonElement>> instanceMsgObjectData ) throws FileNotFoundException, OWLOntologyStorageException {
+    public void instanceMaker(Set<Map.Entry<String, JsonElement>> instanceMsgObjectData) throws FileNotFoundException, OWLOntologyStorageException {
+        OWLNamedIndividual individual = null;
+        OWLDataPropertyAssertionAxiom dataPropAssertion = null;
+        OWLDataProperty dataProp = null;
+        OWLLiteral dataPropLiteral = null;
+        Set<Map.Entry<String, JsonElement>> objectMembersSet = null;
+
+
         System.out.println("====================== Instance adder ======================");
-
-        this.cache = instanceMsgObjectData;
-
-        for (Map.Entry<String, JsonElement> entry : Objects.requireNonNull(cache)) {
+        for (Map.Entry<String, JsonElement> entry : Objects.requireNonNull(instanceMsgObjectData)) {
             String className = entry.getKey();
 
             OWLClass owlClass = dataFactory.getOWLClass(IRI.create(ontologyIRI + "#" + className));
@@ -42,20 +51,16 @@ public class Populator {
 
             for (JsonElement jsonElement : jsonArray) {
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
-                Set<Map.Entry<String, JsonElement>> objectMembersSet = jsonObject.entrySet();
-                OWLNamedIndividual individual = null;
-                OWLDataPropertyAssertionAxiom dataPropAssertion = null;
-                OWLDataProperty dataProp = null;
-                OWLLiteral dataPropLiteral = null;
+                objectMembersSet = jsonObject.entrySet();
+
                 for (Map.Entry<String, JsonElement> individualsProperty : Objects.requireNonNull((objectMembersSet))) {
                     if (Objects.equals(individualsProperty.getKey(), "# Object Name")) {
                         //  Create an individual for the Student class
-                        individual = dataFactory.getOWLNamedIndividual(IRI.create(ontologyIRI + "#" + individualsProperty.getValue().getAsString().replace(" ", "_")));
-
+                        individual = dataFactory.getOWLNamedIndividual(createIRI("#", individualsProperty.getValue().getAsString()));
                     } else {
                         //  Assign data properties to the individual
-                        dataProp = dataFactory.getOWLDataProperty(IRI.create(ontologyIRI + "#has" + individualsProperty.getKey().replace(" ", "_")));
-                        dataPropLiteral = dataFactory.getOWLLiteral(individualsProperty.getValue().getAsString().replace(" ", "_"));
+                        dataProp = dataFactory.getOWLDataProperty(createIRI("#has", individualsProperty.getKey()));
+                        dataPropLiteral = dataFactory.getOWLLiteral(replaceSpaceWithUnderscore(individualsProperty.getValue().getAsString()));
                         if (individual != null) {
                             dataPropAssertion = dataFactory.getOWLDataPropertyAssertionAxiom(dataProp, individual, dataPropLiteral);
                         }
@@ -68,14 +73,20 @@ public class Populator {
                         }
                         assert dataPropAssertion != null;
                         manager.addAxiom(ontology, dataPropAssertion);
-//
                     }
                 }
             }
         }
-//        String outputOwlFileName = "OWL-INDIV-" + session.substring(1, session.length() - 1) + ".owl";
+        //  String outputOwlFileName = "OWL-INDIV-" + session.substring(1, session.length() - 1) + ".owl";
         File fileOut = new File("src/OWLOutput/" + "OWL-indvidual.owl");
         manager.saveOntology(ontology, new FunctionalSyntaxDocumentFormat(), new FileOutputStream(fileOut));
+    }
 
+    private static String replaceSpaceWithUnderscore(String str) {
+        return str.replace(" ", "_");
+    }
+
+    private IRI createIRI(String prefix, String value) {
+        return IRI.create(this.ontologyIRI + prefix + replaceSpaceWithUnderscore(value));
     }
 }

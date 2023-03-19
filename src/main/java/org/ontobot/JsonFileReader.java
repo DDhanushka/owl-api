@@ -100,17 +100,4 @@ public class JsonFileReader {
         return null;
     }
 
-    public static void recPrint(JsonArray taxonomies) {
-        for (JsonElement taxo : taxonomies) {
-            JsonObject classObject = taxo.getAsJsonObject();
-            String class_name = classObject.get("class_name").getAsString();
-            int level = classObject.get("level").getAsInt();
-            System.out.println(class_name + " - " + level);
-            if (classObject.has("sub_classes")) {
-                recPrint((JsonArray) classObject.get("sub_classes"));
-                System.out.println("-----");
-            }
-
-        }
-    }
 }
