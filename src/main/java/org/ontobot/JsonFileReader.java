@@ -91,21 +91,8 @@ public class JsonFileReader {
         try (FileReader reader = new FileReader(jsonPath)) {
             JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
             JsonObject msg = jsonObject.getAsJsonObject("msg");
-
-            Set<Map.Entry<String, JsonElement>> entries = msg.entrySet();
-//            for (Map.Entry<String, JsonElement> entry : entries) {
-//                System.out.println(entry.getKey());
-//                System.out.println(entry.getValue());
-//                System.out.println("------");
-//            }
-            return  entries;
-
-//            System.out.println(individualsArray);
-//            for (JsonElement indItem: individualsArray) {
-//                JsonObject classObject = indItem.getAsJsonObject();
-//                String className = classObject.get("name").getAsString(); // superClass
-//                System.out.println(className);
-//            }
+            // return msg object from json
+            return msg.entrySet();
 
         } catch (IOException e) {
             e.printStackTrace();
