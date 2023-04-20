@@ -33,7 +33,7 @@ public class Main {
 //
 //        // check consistency of simple op level stage and advanced level stage
 
-        ontoBuilder.build(concepts, taxonomies, ops);
+        //ontoBuilder.build(concepts, taxonomies, ops);
         ontoBuilder.getConsistencyResult();
 //
 //        // generate final stage ontology
@@ -42,19 +42,21 @@ public class Main {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         port(8080);
 
 //  http://java_backend_url/taxonomy/generate
 //  generate taxonomy stage ontology
 
+
         post("/taxonomy/generate", (request, response) -> {
+            System.out.println("Hi");
             JsonReqBodyReader jsonReqBodyReader = new JsonReqBodyReader(request);
             JsonArray taxonomies = jsonReqBodyReader.GetTaxonomies();
             String[] concepts = jsonReqBodyReader.GetConcepts();
             String sessionID = jsonReqBodyReader.getSessionID();
-
             OntoBuilder ontoBuilder = new OntoBuilder();
+
             ontoBuilder.build(concepts, taxonomies);
 
             // Get the path to the XML file on disk
