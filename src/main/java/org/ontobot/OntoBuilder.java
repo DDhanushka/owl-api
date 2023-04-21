@@ -421,12 +421,29 @@ public class OntoBuilder {
         }
     }
 
+
     public boolean getConsistencyResult(){
         return this.checkConsistency(this.ontology);
     }
 
     public File saveGeneratedOntology(String sessionID) throws FileNotFoundException, OWLOntologyStorageException {
         return this.saveOntology(this.ontology, sessionID);
+    }
+
+    public OWLOntologyManager getOntologyManager(){
+        return this.manager;
+    }
+
+    public IRI getOntologyIRI(){
+        return this.ontologyIRI;
+    }
+
+    public Hashtable<String, OWLClass> getHashMap() {
+        return hashMap;
+    }
+
+    public OWLOntology getOntology() {
+        return ontology;
     }
 
     private OWL2Datatype getPropertyType(String type){
