@@ -1,5 +1,6 @@
 package org.ontobot;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -577,9 +578,6 @@ public class OntoBuilder {
         return fileOut;
     }
 
-    public OWLOntology getOntology() {
-        return this.ontology;
-    }
 
     public IRI getIRI() {
         return this.ontologyIRI;
