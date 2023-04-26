@@ -1,0 +1,66 @@
+{
+  "code": 201,
+  "msg": {
+    "Organization": [
+      {
+        "# Object Name": "WSO2",
+        "name": "web services oxygen",
+        "year": 2005
+      },
+      {
+        "# Object Name": "IFS",
+        "name": "international financial system",
+        "year": 1997
+      }
+    ],
+    "School": [
+      {
+        "# Object Name": "AC",
+        "name": "Ananda",
+        "year": 1890,
+        "category": "Top"
+      },
+      {
+        "# Object Name": "NC",
+        "name": "Nalanda",
+        "year": 1890,
+        "category": "Top"
+      }
+    ],
+    "University": [
+      {
+        "# Object Name": "UOC",
+        "name": "Colombo",
+        "year": 1800
+      },
+      {
+        "# Object Name": "UOJ",
+        "name": "Jaffna",
+        "year": 1900
+      }
+    ],
+    "Primary School": [],
+    "Student": [],
+    "Toxic Student": [],
+    "Innocent Student": [],
+    "Toxic Female Student": [],
+    "Toxic Male Student": [],
+    "Lecture": [],
+    "Juinor Lecture": [],
+    "Senior Lecture": [],
+    "Degree": [
+      {
+        "# Object Name": "Degree 01",
+        "Degree Name": "CS"
+      },
+      {
+        "# Object Name": "Degree 02",
+        "Degree Name": "IS"
+      }
+    ],
+    "CS Degree": [],
+    "IS Degree": [],
+    "SE Degree": []
+  },
+  "type": "success"
+}

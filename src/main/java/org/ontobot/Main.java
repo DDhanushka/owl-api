@@ -17,7 +17,7 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 
 public class Main {
-    public static void NotMain(String[] args) throws OWLOntologyCreationException, FileNotFoundException, OWLOntologyStorageException {
+    public static void runUsingFileRead(String[] args) throws OWLOntologyCreationException, FileNotFoundException, OWLOntologyStorageException {
         String filepath = "src/main/java/org/ontobot/newresponse.json";
         JsonArray taxonomies = JsonFileReader.GetTaxonomies(filepath);
         JsonArray ops = JsonFileReader.GetOps(filepath);
@@ -27,18 +27,7 @@ public class Main {
         assert taxonomies != null;
 
         OntoBuilder ontoBuilder = new OntoBuilder();
-
-        // generate taxonomy stage ontology
-        //ontoBuilder.build(concepts, taxonomies);
-        //ontoBuilder.saveGeneratedOntology();
-
-//        // check consistency of taxonomy level stage
-//        ontoBuilder.build(concepts, taxonomies);
-//        ontoBuilder.getConsistencyResult();
-//
-//        // check consistency of simple op level stage and advanced level stage
-
-        //ontoBuilder.build(concepts, taxonomies, ops);
+        ontoBuilder.build(concepts, taxonomies, ops);
         ontoBuilder.getConsistencyResult();
 //
 //        // generate final stage ontology
@@ -47,21 +36,19 @@ public class Main {
 
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         port(8080);
 
 //  http://java_backend_url/taxonomy/generate
 //  generate taxonomy stage ontology
 
-
         post("/taxonomy/generate", (request, response) -> {
-            System.out.println("Hi");
             JsonReqBodyReader jsonReqBodyReader = new JsonReqBodyReader(request);
             JsonArray taxonomies = jsonReqBodyReader.GetTaxonomies();
             String[] concepts = jsonReqBodyReader.GetConcepts();
             String sessionID = jsonReqBodyReader.getSessionID();
-            OntoBuilder ontoBuilder = new OntoBuilder();
 
+            OntoBuilder ontoBuilder = new OntoBuilder();
             ontoBuilder.build(concepts, taxonomies);
 
             // Get the path to the XML file on disk

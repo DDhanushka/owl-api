@@ -577,4 +577,9 @@ public class OntoBuilder {
         this.manager.saveOntology(fetchedOntology, new FunctionalSyntaxDocumentFormat(), new FileOutputStream(fileOut));
         return fileOut;
     }
+
+
+    public IRI getIRI() {
+        return this.ontologyIRI;
+    }
 }

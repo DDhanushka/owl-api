@@ -14,6 +14,7 @@ public class JsonFileReader {
     public static void main(String[] args) {
 
     }
+
     public static JsonArray GetTaxonomies(String jsonPath) {
         Gson gson = new Gson();
 
@@ -71,7 +72,7 @@ public class JsonFileReader {
     public static String getSessionID(String jsonPath) {
         Gson gson = new Gson();
 
-        try (FileReader reader = new FileReader(jsonPath)){
+        try (FileReader reader = new FileReader(jsonPath)) {
             JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
             // use jsonObject to access the data
             JsonObject msg = jsonObject.getAsJsonObject("msg");
@@ -84,17 +85,19 @@ public class JsonFileReader {
         return null;
     }
 
-    public static void RecPrint(JsonArray taxonomies) {
-        for (JsonElement taxo : taxonomies) {
-            JsonObject classObject = taxo.getAsJsonObject();
-            String class_name = classObject.get("class_name").getAsString();
-            int level = classObject.get("level").getAsInt();
-            System.out.println(class_name + " - " + level);
-            if (classObject.has("sub_classes")) {
-                RecPrint((JsonArray) classObject.get("sub_classes"));
-                System.out.println("-----");
-            }
+    public static Set<Map.Entry<String, JsonElement>> getIndividuals(String jsonPath) {
+        Gson gson = new Gson();
 
+        try (FileReader reader = new FileReader(jsonPath)) {
+            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+            JsonObject msg = jsonObject.getAsJsonObject("msg");
+            // return msg object from json
+            return msg.entrySet();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return null;
     }
+
 }
